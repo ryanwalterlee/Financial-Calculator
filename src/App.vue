@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Title msg="Financial Calculator"/>
+    <EPS10years/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Title from './components/Title.vue'
+import EPS10years from './components/EPS10years.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Title,
+    EPS10years
   }
 }
 </script>
