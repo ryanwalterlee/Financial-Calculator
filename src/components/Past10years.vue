@@ -6,12 +6,12 @@
       </thead>
       <tbody>
         <tr>
-          <td>Year</td><td>EPS</td><td>P/E Ratio</td>
+          <td>Year</td><td class="stats">EPS</td><td class="stats">P/E Ratio</td>
         </tr>
         <tr v-for="year in years" :key="year">
           <td>{{ year }}</td>
-          <td><input type="Number"/></td>
-          <td><input type="Number"/></td>
+          <td class="stats"><input type="Number"/></td>
+          <td class="stats"><input type="Number"/></td>
         </tr>
       </tbody>
     </table>
@@ -35,4 +35,27 @@ export default {
 </script>
 
 <style>
+input {
+  width: 90%;
+  border: hidden;
+}
+
+input:focus {
+  outline: none;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.Past10years {
+  margin-left: 10px;
+  margin-right:10px;
+}
+
+.stats {
+  width: 100px;
+}
+
 </style>

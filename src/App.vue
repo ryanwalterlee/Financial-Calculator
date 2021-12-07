@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <h1>Financial Calculator</h1>
-    <Past10years/>
-    <br>
-    <IncomeStatement/>
-    <br>
-    <BalanceSheet/>
-    <br>
-    <CashFlowStatement/>
-    <br>
+    <div class="fundamentals">
+      <Past10years/>
+      <IncomeStatement/>
+      <div class="balancecash">
+        <BalanceSheet/>
+        <CashFlowStatement/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,7 +29,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -41,4 +41,20 @@ export default {
   align-items: center;
   flex-direction: column;
 }
+
+.fundamentals {
+  display: flex;
+  flex-direction: row;
+}
+
+.balancecash {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  }
+
+td {
+  white-space:nowrap;
+}
+
 </style>

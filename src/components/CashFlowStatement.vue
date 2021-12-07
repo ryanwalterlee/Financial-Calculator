@@ -1,5 +1,5 @@
 <template>
-    <FinancialStatement name="Cash Flow Statement" :listOfStats="stats" />
+    <FinancialStatement class="cashFlowStatement" name="Cash Flow Statement" :listOfStats="stats" />
 </template>
 
 <script>
@@ -16,3 +16,10 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.cashFlowStatement {
+  margin-left: 10px;
+  margin-right:10px;
+}
+</style>

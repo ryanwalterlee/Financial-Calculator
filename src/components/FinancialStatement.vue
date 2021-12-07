@@ -1,12 +1,12 @@
 <template>
-  <div class="FinancialStatement">
+  <div class="financialStatement">
     <table>
       <thead>
         <th colspan="2">{{ name }}</th>
       </thead>
       <tbody>
         <tr v-for="stat in listOfStats" :key="stat">
-          <td>{{ stat }}</td>
+          <td class="label">{{ stat }}</td>
           <td><input type="Number"/></td>
         </tr>
       </tbody>
@@ -23,5 +23,23 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+input {
+  width: 50%;
+  border: hidden;
+}
+
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+table {
+  width: 300px;
+}
+
+.label {
+  width:150px;
+}
+
 </style>

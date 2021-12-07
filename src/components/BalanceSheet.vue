@@ -1,5 +1,5 @@
 <template>
-    <FinancialStatement name="BalanceSheet" :listOfStats="stats" />
+    <FinancialStatement class="balanceSheet" name="BalanceSheet" :listOfStats="stats" />
 </template>
 
 <script>
@@ -19,3 +19,11 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.balanceSheet {
+  margin-left: 10px;
+  margin-right:10px;
+  margin-bottom: 40px;
+}
+</style>
