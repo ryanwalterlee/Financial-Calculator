@@ -1,19 +1,30 @@
 <template>
   <div id="app">
-    <Title msg="Financial Calculator"/>
-    <EPS10years/>
+    <h1>Financial Calculator</h1>
+    <Past10years/>
+    <br>
+    <IncomeStatement/>
+    <br>
+    <BalanceSheet/>
+    <br>
+    <CashFlowStatement/>
+    <br>
   </div>
 </template>
 
 <script>
-import Title from './components/Title.vue'
-import EPS10years from './components/EPS10years.vue'
+import Past10years from './components/Past10years.vue'
+import IncomeStatement from './components/IncomeStatement.vue'
+import BalanceSheet from './components/BalanceSheet.vue'
+import CashFlowStatement from './components/CashFlowStatement.vue'
 
 export default {
   name: 'App',
   components: {
-    Title,
-    EPS10years
+    Past10years,
+    IncomeStatement,
+    BalanceSheet,
+    CashFlowStatement,
   }
 }
 </script>
@@ -26,5 +37,8 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 </style>
