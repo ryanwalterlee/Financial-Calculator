@@ -1,18 +1,21 @@
 <template>
   <div id="app">
-    <h1>Financial Calculator</h1>
-    <div class="fundamentals">
-      <Past10years/>
-      <IncomeStatement/>
-      <div class="balancecash">
-        <BalanceSheet/>
-        <CashFlowStatement/>
+
+      <Header class="header" message="Financial Calculator" />
+      <div class="fundamentals">
+        <Past10years/>
+        <IncomeStatement/>
+        <div class="balancecash">
+          <BalanceSheet/>
+          <CashFlowStatement/>
+        </div>
       </div>
-    </div>
+
   </div>
 </template>
 
 <script>
+import Header from './components/Header.vue'
 import Past10years from './components/Past10years.vue'
 import IncomeStatement from './components/IncomeStatement.vue'
 import BalanceSheet from './components/BalanceSheet.vue'
@@ -21,6 +24,7 @@ import CashFlowStatement from './components/CashFlowStatement.vue'
 export default {
   name: 'App',
   components: {
+    Header,
     Past10years,
     IncomeStatement,
     BalanceSheet,
@@ -36,7 +40,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -44,17 +47,22 @@ export default {
 
 .fundamentals {
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* put statistics side by side */
+  width: 100%;
+  margin-top: 30px; /* add space from header */
+  margin-bottom: 30px;
+  justify-content: center; /* center in the webpage */
+
 }
 
 .balancecash {
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+  flex-direction: column; /* stack balance on top of cash */
   }
 
-td {
-  white-space:nowrap;
+.header {
+  width: 100%; /* Enlarge header to full width */
 }
+
 
 </style>
