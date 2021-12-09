@@ -5,9 +5,9 @@
         <th colspan="2">Income Statement</th>
       </thead>
       <tbody>
-        <tr v-for="stat in stats" :key="stat">
+        <tr v-for="stat in Object.keys(stats)" :key="stat">
           <td class="label">{{ stat }}</td>
-          <td><input type="Number"/></td>
+          <td><input type="Number" @change="modifyIncomeStatement(stats[stat], $event.target.value)" /></td>
         </tr>
       </tbody>
     </table>
@@ -18,16 +18,22 @@
 export default {
   name: 'IncomeStatement',
   data: function() { 
-          return {stats: ['Total Revenue',
-        'Gross Profit',
-        'Selling, General and Admin',
-        'Research & Development',
-        'Depreciation',
-        'Operating Income',
-        'Interest Expense',
-        'Sale of Asset',
-        'Net Earnings']}      
+          return {stats: {'Total Revenue': "TotalRevenue",
+          'Gross Profit': "GrossProfit",
+          'Selling, General and Admin': "SGA",
+          'Research & Development': "RD",
+          'Depreciation': "Depreciation",
+          'Operating Income': "OperatingIncome",
+          'Interest Expense': "InterestExpense",
+          'Sale of Asset': "SaleOfAsset",
+          'Net Earnings': "NetEarnings",}
+          }      
   },
+  methods: {
+    modifyIncomeStatement: function (stat, n) {
+      this.$store.commit("modifyIncomeStatement", {stat: stat, amount: n});
+    }
+  }
 }
 
 </script>

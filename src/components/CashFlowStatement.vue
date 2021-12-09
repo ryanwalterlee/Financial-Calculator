@@ -5,9 +5,9 @@
         <th colspan="2">Cash Flow Statement</th>
       </thead>
       <tbody>
-        <tr v-for="stat in stats" :key="stat">
+        <tr v-for="stat in Object.keys(stats)" :key="stat">
           <td class="label">{{ stat }}</td>
-          <td><input type="Number"/></td>
+          <td><input type="Number" @change="modifyCapitalExpenditure(stats[stat], $event.target.value)"/></td>
         </tr>
       </tbody>
     </table>
@@ -18,8 +18,15 @@
 export default {
   name: 'CashFlowStatement',
   data: function() { 
-          return {stats: ['Capital Expenditure']}     
+          return {
+            stats: {'Capital Expenditure': "CapitalExpenditure"}
+          }     
   },
+  methods: {
+    modifyCapitalExpenditure(stat, n) {
+      this.$store.commit("modifyCapitalExpenditure", {stat:stat, amount:n});
+    }
+  }
 }
 
 </script>

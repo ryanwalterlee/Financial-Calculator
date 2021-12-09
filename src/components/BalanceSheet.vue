@@ -5,9 +5,11 @@
         <th colspan="2">Balance Sheet</th>
       </thead>
       <tbody>
-        <tr v-for="stat in stats" :key="stat">
+        <tr v-for="stat in Object.keys(stats)" :key="stat">
           <td class="label">{{ stat }}</td>
-          <td><input type="Number"/></td>
+          <td>
+            <input type="Number" @change="modifyBalanceSheet(stats[stat], $event.target.value)" />
+          </td>
         </tr>
       </tbody>
     </table>
@@ -18,11 +20,17 @@
 export default {
   name: 'BalanceSheet',
   data: function() { 
-          return {stats: ['Long Term Debt',
-          'Total Liabilities',
-          'Shareholders\'s Equity',
-          'Treasury Stock']}      
+          return {stats: {'Long Term Debt': "LongTermDebt",
+          'Total Liabilities': "TotalLiabilities",
+          'Shareholders\'s Equity': "ShareholderEquity",
+          'Treasury Stock': "TreasuryStock"}
+          }      
   },
+  methods: {
+    modifyBalanceSheet: function(stat, n) {
+      this.$store.commit("modifyBalanceSheet", {stat:stat, amount:n});
+    }
+  }
 }
 
 </script>
