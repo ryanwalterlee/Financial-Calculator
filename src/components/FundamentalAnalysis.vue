@@ -35,40 +35,79 @@ export default {
   },
   computed: {
     calcGrossProfitMargin: function() {
-      return this.$store.getters.GrossProfit / this.$store.getters.TotalRevenue;
+      if (this.$store.getters.GrossProfit && this.$store.getters.TotalRevenue) {
+        return this.$store.getters.GrossProfit / this.$store.getters.TotalRevenue;
+      } else {
+        return "";
+      }
     },
     calcPercentageSGA: function() {
-      return this.$store.getters.SGA / this.calcGrossProfitMargin;
+      if (this.$store.getters.SGA && this.calcGrossProfitMargin) {
+        return this.$store.getters.SGA / this.calcGrossProfitMargin;
+      } else {
+        return "";
+      }
     },
     calcPercentageRD: function() {
-      return this.$store.getters.RD / this.calcGrossProfitMargin;
+      if (this.$store.getters.RD && this.calcGrossProfitMargin) {
+        return this.$store.getters.RD / this.calcGrossProfitMargin;
+      } else {
+        return "";
+      }
     },
     calcPercentageDepreciation: function() {
-      return this.$store.getters.Depreciation / this.calcGrossProfitMargin;
+      if (this.$store.getters.Depreciation && this.calcGrossProfitMargin) {
+        return this.$store.getters.Depreciation / this.calcGrossProfitMargin;
+      } else {
+        return "";
+      }
     },
     calcInterestExpenseOfOperatingIncome: function() {
-      return this.$store.getters.InterestExpense / this.$store.getters.$OperatingIncome;
+      if (this.$store.getters.InterestExpense && this.$store.getters.$OperatingIncome) {
+        return this.$store.getters.InterestExpense / this.$store.getters.$OperatingIncome;
+      } else {
+        return "";
+      }
     },
     calcProfitMargin: function() {
-      return this.$store.getters.NetEarnings / this.$store.getters.TotalRevenue;
+      if (this.$store.getters.NetEarnings && this.$store.getters.TotalRevenue) {
+        return this.$store.getters.NetEarnings / this.$store.getters.TotalRevenue;
+      } else {
+        return "";
+      }
     },
     calcLongTermDebtToNetEarnings: function() {
-      return this.$store.getters.LongTermDebt / this.$store.getters.NetEarnings;
+      if (this.$store.getters.LongTermDebt && this.$store.getters.NetEarnings) {
+        return this.$store.getters.LongTermDebt / this.$store.getters.NetEarnings;
+      } else {
+        return "";
+      }
     },
     calcAdjDebtToEquity: function() {
       const shareholderEquity = this.$store.getters.ShareholderEquity;
       const treasuryStock = this.$store.getters.TreasuryStock;
       const totalLiabilities = this.$store.getters.TotalLiabilities;
-      return totalLiabilities / (shareholderEquity + treasuryStock);
+      if (totalLiabilities && (shareholderEquity || treasuryStock)) {
+        return totalLiabilities / (shareholderEquity + treasuryStock);
+      } else {
+        return "";
+      }
     },
     calcReturnOnEquity: function() {
-      return this.$store.getters.NetEarnings / this.$store.getters.ShareholderEquity;
+      if (this.$store.getters.NetEarnings && this.$store.getters.ShareholderEquity) {
+        return this.$store.getters.NetEarnings / this.$store.getters.ShareholderEquity;
+      } else {
+        return "";
+      }
     },
     calcPercentageCapitalExpenditure: function() {
-      return this.$store.getters.CapitalExpenditure / this.$store.getters.NetEarnings;
+      if (this.$store.getters.CapitalExpenditure && this.$store.getters.NetEarnings) {
+        return this.$store.getters.CapitalExpenditure / this.$store.getters.NetEarnings;
+      } else {
+        return "";
+      }
     },
     calcFundamentalAnalysis: function() {
-      console.log(this.$store.getters.GrossProfit)
       return {
         "Gross Profit Margin": this.calcGrossProfitMargin,
         "% SGA out of Gross Profit": this.calcPercentageSGA,

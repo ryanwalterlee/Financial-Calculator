@@ -43,38 +43,72 @@ export default {
     },
     calc10yearEPS: function() {
       const firstEPS = this.$store.getters.EPS[0];
-      return (((1 + this.avgEPSgrowth)**10)*firstEPS).toFixed(2);
+      if (firstEPS && this.avgEPSgrowth) {
+        return (((1 + this.avgEPSgrowth)**10)*firstEPS).toFixed(2);
+      } else {
+        return "";
+      }
+      
     },
     calc10yearMarketPrice: function() {
-      return (this.calc10yearEPS * this.avgPE).toFixed(2);
+      if (this.calc10yearEPS && this.avgPE) {
+        return (this.calc10yearEPS * this.avgPE).toFixed(2);
+      } else {
+        return "";
+      }
     },
     calcMaxMarketPrice: function() {
-      return (this.calc10yearEPS * Math.max(...this.$store.getters.EPS)).toFixed(2);
+      if (this.calc10yearEPS && this.$store.getters.EPS.includes(0)) {
+        return (this.calc10yearEPS * Math.max(...this.$store.getters.EPS)).toFixed(2);
+      } else {
+        return "";
+      }
     },
     calcMinMarketPrice: function() {
-      return (this.calc10yearEPS * Math.min(...this.$store.getters.EPS)).toFixed(2);
+      if (this.calc10yearEPS && this.$store.getters.EPS.includes(0)) {
+        return (this.calc10yearEPS * Math.min(...this.$store.getters.EPS)).toFixed(2);
+      } else {
+        return "";
+      }
     },
     getCurrentMarketPrice: function() {
-      return this.$store.getters.CurrentMarketPrice;
+      if (this.$store.getters.CurrentMarketPrice) {
+        return this.$store.getters.CurrentMarketPrice;
+      } else {
+        return "";
+      }
+      
     },
     calcAnnualGrowthRate: function() {
-      return (((this.calc10yearMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+      if (this.calc10yearMarketPrice && this.getCurrentMarketPrice) {
+        return (((this.calc10yearMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+      } else {
+        return "";
+      }
     },
-    calcMaxGrowthRate: function() {      
-      return (((this.calcMaxMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+    calcMaxGrowthRate: function() {
+      if (this.calcMaxMarketPrice && this.getCurrentMarketPrice) {
+        return (((this.calcMaxMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+      } else {
+        return "";
+      }
     },
     calcMinGrowthRate: function() {
-      return (((this.calcMinMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+      if (this.calcMinMarketPrice && this.getCurrentMarketPrice) {
+        return (((this.calcMinMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+      } else {
+        return "";
+      }
     },
     calcProjections: function() {
       return {
-        "EPS in 10 years": this.calc10yearEPS ? this.calc10yearEPS : "",
-        "Market Price in 10 years": this.calc10yearMarketPrice ? this.calc10yearMarketPrice : "",
-        "Max Market Price": this.calcMaxMarketPrice ? this.calcMaxMarketPrice : "",
-        "Min Market Price": this.calcMinMarketPrice ? this.calcMinMarketPrice : "",
-        "Annual Growth Rate": this.calcAnnualGrowthRate ? this.calcAnnualGrowthRate : "",
-        "Max Growth Rate": this.calcMaxGrowthRate ? this.calcMaxGrowthRate : "",
-        "Min Growth Rate": this.calcMinGrowthRate ? this.calcMinGrowthRate : "",
+        "EPS in 10 years": this.calc10yearEPS,
+        "Market Price in 10 years": this.calc10yearMarketPrice,
+        "Max Market Price": this.calcMaxMarketPrice,
+        "Min Market Price": this.calcMinMarketPrice,
+        "Annual Growth Rate": this.calcAnnualGrowthRate,
+        "Max Growth Rate": this.calcMaxGrowthRate,
+        "Min Growth Rate": this.calcMinGrowthRate,
       }
     }
   }
