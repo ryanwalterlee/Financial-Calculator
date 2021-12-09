@@ -9,9 +9,9 @@
           <td>Year</td><td class="stats">EPS</td><td class="stats">P/E Ratio</td>
         </tr>
         <tr v-for="year in years" :key="year">
-          <td>{{ year }}</td>
-          <td class="stats"><input type="Number"/></td>
-          <td class="stats"><input type="Number"/></td>
+          <td class="label">{{ year }} year ago</td>
+          <td class="stats"><input type="Number" @change="modifyEPS(year-1, $event.target.value)"/></td>
+          <td class="stats"><input type="Number" @change="modifyPEratio(year-1, $event.target.value)"/></td>
         </tr>
       </tbody>
     </table>
@@ -25,16 +25,27 @@ export default {
   computed: {
       years: function() {
           let array = [];
-          for (let i = 2020; i > 2010; i--) {
+          for (let i = 1; i <= 10; i++) {
               array.push(i);
           }
           return array;
-      }
+      },
+      
   },
+  methods: {
+    modifyEPS(position, amount) {
+      this.$store.commit('modifyEPS', 
+        {position:position, amount:amount})
+    },
+    modifyPEratio(position, amount) {
+      this.$store.commit('modifyPEratio', 
+        {position:position, amount:amount})
+    },
+  }
 }
 </script>
 
-<style>
+<style scoped>
 input {
   width: 90%;
   border: hidden;
@@ -56,6 +67,14 @@ table, th, td {
 
 .stats {
   width: 100px;
+}
+
+table {
+  width: 300px;
+}
+
+.label {
+  width:100px;
 }
 
 </style>
