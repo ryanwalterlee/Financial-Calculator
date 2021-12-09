@@ -58,26 +58,21 @@ export default {
       }
     },
     calcMaxMarketPrice: function() {
-      if (this.calc10yearEPS && this.$store.getters.EPS.includes(0)) {
+      if (this.calc10yearEPS && !this.$store.getters.EPS.includes(0)) {
         return (this.calc10yearEPS * Math.max(...this.$store.getters.EPS)).toFixed(2);
       } else {
         return "";
       }
     },
     calcMinMarketPrice: function() {
-      if (this.calc10yearEPS && this.$store.getters.EPS.includes(0)) {
+      if (this.calc10yearEPS && !this.$store.getters.EPS.includes(0)) {
         return (this.calc10yearEPS * Math.min(...this.$store.getters.EPS)).toFixed(2);
       } else {
         return "";
       }
     },
     getCurrentMarketPrice: function() {
-      if (this.$store.getters.CurrentMarketPrice) {
-        return this.$store.getters.CurrentMarketPrice;
-      } else {
-        return "";
-      }
-      
+      return this.$store.getters.CurrentMarketPrice;     
     },
     calcAnnualGrowthRate: function() {
       if (this.calc10yearMarketPrice && this.getCurrentMarketPrice) {

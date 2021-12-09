@@ -23,8 +23,10 @@ export default new Vuex.Store({
       TotalLiabilities: 0,
       ShareholderEquity: 0,
       TreasuryStock: 0,
+    },
+    CashFlowStatement: {
+      CapitalExpenditure: 0,
     },    
-    CapitalExpenditure: 0,
     CurrentMarketPrice: 0
   },
 
@@ -36,28 +38,17 @@ export default new Vuex.Store({
       state.PEratio.splice(payload.position, 1, payload.amount);
     },
     modifyIncomeStatement(state, payload) {     
-      // console.log(payload.amount);
       Vue.set(state.IncomeStatement, payload.stat, payload.amount);
-      // console.log(state.IncomeStatement.GrossProfit);
     },
-    // modifyTotalRevenue(state, n) {Vue.set(state.IncomeStatement, "TotalRevenue", n)},
-    // modifyGrossProfit(state, n) {Vue.set(state.IncomeStatement, "GrossProfit",n)},
-    // modifySGA(state, n) {Vue.set(state.IncomeStatement, "SGA", n)},
-    // modifyRD(state, n) {Vue.set(state.IncomeStatement, "RD", n)},
-    // modifyDepreciation(state, n) {Vue.set(state.IncomeStatement, "Depreciation", n)},
-    // modifyOperatingIncome(state, n) {Vue.set(state.IncomeStatement, "OperatingIncome", n)},
-    // modifyInterestExpense(state, n) {Vue.set(state.IncomeStatement, "InterestExpense", n)},
-    // modifySaleOfAsset(state, n) {Vue.set(state.IncomeStatement, "SaleOfAsset", n)},
-    // modifyNetEarnings(state, n) {Vue.set(state.IncomeStatement, "NetEarnings", n)},
+    
     modifyBalanceSheet(state, payload) {
       Vue.set(state.BalanceSheet, payload.stat, payload.amount);
     },
-    // modifyLongTermDebt(state, n) {Vue.set(state.BalanceSheet, "LongTermDebt",n)},
-    // modifyTotalLiabilities(state, n) {Vue.set(state.BalanceSheet, "TotalLiabilities", n)},
-    // modifyShareholderEquity(state, n) {Vue.set(state.BalanceSheet, "ShareholderEquity", n)},
-    // modifyTreasuryStock(state, n) {Vue.set(state.BalanceSheet, "TreasuryStock", n)},
-    modifyCapitalExpenditure(state, n) {state.CapitalExpenditure, n},
-    modifyCurrentMarketPrice(state, n) {state.CurrentMarketPrice, n},
+
+    modifyCapitalExpenditure(state, payload) {
+      Vue.set(state.CashFlowStatement, payload.stat, payload.amount);
+    },
+    modifyCurrentMarketPrice(state, n) {state.CurrentMarketPrice = n},
   },
 
   getters: {
@@ -76,7 +67,7 @@ export default new Vuex.Store({
     TotalLiabilities: state => state.BalanceSheet.TotalLiabilities,
     ShareholderEquity: state => state.BalanceSheet.ShareholderEquity,
     TreasuryStock: state => state.BalanceSheet.TreasuryStock,
-    CapitalExpenditure: state => state.CapitalExpenditure,
+    CapitalExpenditure: state => state.CashFlowStatement.CapitalExpenditure,
     CurrentMarketPrice: state => state.CurrentMarketPrice,
   }
 })

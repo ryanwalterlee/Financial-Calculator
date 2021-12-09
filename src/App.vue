@@ -51,6 +51,8 @@ export default {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -69,6 +71,7 @@ export default {
   margin-top: 30px; /* add space from header */
   margin-bottom: 30px;
   justify-content: center; /* center in the webpage */
+  font-family: 'Roboto Condensed', sans-serif;
 
 }
 
@@ -87,7 +90,7 @@ export default {
   width: 100%;
   margin-bottom: 30px;
   justify-content: center; /* center in the webpage */
+  font-family: 'Roboto Condensed', sans-serif;
 }
-
 
 </style>

@@ -36,49 +36,49 @@ export default {
   computed: {
     calcGrossProfitMargin: function() {
       if (this.$store.getters.GrossProfit && this.$store.getters.TotalRevenue) {
-        return this.$store.getters.GrossProfit / this.$store.getters.TotalRevenue;
+        return (this.$store.getters.GrossProfit / this.$store.getters.TotalRevenue).toFixed(2);
       } else {
         return "";
       }
     },
     calcPercentageSGA: function() {
       if (this.$store.getters.SGA && this.calcGrossProfitMargin) {
-        return this.$store.getters.SGA / this.calcGrossProfitMargin;
+        return (this.$store.getters.SGA / this.calcGrossProfitMargin).toFixed(2);
       } else {
         return "";
       }
     },
     calcPercentageRD: function() {
       if (this.$store.getters.RD && this.calcGrossProfitMargin) {
-        return this.$store.getters.RD / this.calcGrossProfitMargin;
+        return (this.$store.getters.RD / this.calcGrossProfitMargin).toFixed(2);
       } else {
         return "";
       }
     },
     calcPercentageDepreciation: function() {
       if (this.$store.getters.Depreciation && this.calcGrossProfitMargin) {
-        return this.$store.getters.Depreciation / this.calcGrossProfitMargin;
+        return (this.$store.getters.Depreciation / this.calcGrossProfitMargin).toFixed(2);
       } else {
         return "";
       }
     },
     calcInterestExpenseOfOperatingIncome: function() {
-      if (this.$store.getters.InterestExpense && this.$store.getters.$OperatingIncome) {
-        return this.$store.getters.InterestExpense / this.$store.getters.$OperatingIncome;
+      if (this.$store.getters.InterestExpense && this.$store.getters.OperatingIncome) {
+        return (this.$store.getters.InterestExpense / this.$store.getters.OperatingIncome).toFixed(2);
       } else {
         return "";
       }
     },
     calcProfitMargin: function() {
       if (this.$store.getters.NetEarnings && this.$store.getters.TotalRevenue) {
-        return this.$store.getters.NetEarnings / this.$store.getters.TotalRevenue;
+        return (this.$store.getters.NetEarnings / this.$store.getters.TotalRevenue).toFixed(2);
       } else {
         return "";
       }
     },
     calcLongTermDebtToNetEarnings: function() {
       if (this.$store.getters.LongTermDebt && this.$store.getters.NetEarnings) {
-        return this.$store.getters.LongTermDebt / this.$store.getters.NetEarnings;
+        return (this.$store.getters.LongTermDebt / this.$store.getters.NetEarnings).toFixed(2);
       } else {
         return "";
       }
@@ -88,21 +88,23 @@ export default {
       const treasuryStock = this.$store.getters.TreasuryStock;
       const totalLiabilities = this.$store.getters.TotalLiabilities;
       if (totalLiabilities && (shareholderEquity || treasuryStock)) {
-        return totalLiabilities / (shareholderEquity + treasuryStock);
+        return (totalLiabilities / (shareholderEquity + treasuryStock)).toFixed(2);
       } else {
         return "";
       }
     },
     calcReturnOnEquity: function() {
       if (this.$store.getters.NetEarnings && this.$store.getters.ShareholderEquity) {
-        return this.$store.getters.NetEarnings / this.$store.getters.ShareholderEquity;
+        return (this.$store.getters.NetEarnings / this.$store.getters.ShareholderEquity).toFixed(2);
       } else {
         return "";
       }
     },
     calcPercentageCapitalExpenditure: function() {
+      console.log(this.$store.getters.CapitalExpenditure);
+      console.log();
       if (this.$store.getters.CapitalExpenditure && this.$store.getters.NetEarnings) {
-        return this.$store.getters.CapitalExpenditure / this.$store.getters.NetEarnings;
+        return (this.$store.getters.CapitalExpenditure / this.$store.getters.NetEarnings).toFixed(2);
       } else {
         return "";
       }
