@@ -7,7 +7,7 @@
       <tbody>
         <tr v-for="ratio in Ratios" :key="ratio">
           <td class="label">{{ ratio }}</td>
-          <td></td>
+          <td>{{ calcFundamentalAnalysis[ratio] }}</td>
         </tr>
       </tbody>
     </table>
@@ -33,6 +33,56 @@ export default {
       ],
     };
   },
+  computed: {
+    calcGrossProfitMargin: function() {
+      return this.$store.getters.GrossProfit / this.$store.getters.TotalRevenue;
+    },
+    calcPercentageSGA: function() {
+      return this.$store.getters.SGA / this.calcGrossProfitMargin;
+    },
+    calcPercentageRD: function() {
+      return this.$store.getters.RD / this.calcGrossProfitMargin;
+    },
+    calcPercentageDepreciation: function() {
+      return this.$store.getters.Depreciation / this.calcGrossProfitMargin;
+    },
+    calcInterestExpenseOfOperatingIncome: function() {
+      return this.$store.getters.InterestExpense / this.$store.getters.$OperatingIncome;
+    },
+    calcProfitMargin: function() {
+      return this.$store.getters.NetEarnings / this.$store.getters.TotalRevenue;
+    },
+    calcLongTermDebtToNetEarnings: function() {
+      return this.$store.getters.LongTermDebt / this.$store.getters.NetEarnings;
+    },
+    calcAdjDebtToEquity: function() {
+      const shareholderEquity = this.$store.getters.ShareholderEquity;
+      const treasuryStock = this.$store.getters.TreasuryStock;
+      const totalLiabilities = this.$store.getters.TotalLiabilities;
+      return totalLiabilities / (shareholderEquity + treasuryStock);
+    },
+    calcReturnOnEquity: function() {
+      return this.$store.getters.NetEarnings / this.$store.getters.ShareholderEquity;
+    },
+    calcPercentageCapitalExpenditure: function() {
+      return this.$store.getters.CapitalExpenditure / this.$store.getters.NetEarnings;
+    },
+    calcFundamentalAnalysis: function() {
+      console.log(this.$store.getters.GrossProfit)
+      return {
+        "Gross Profit Margin": this.calcGrossProfitMargin,
+        "% SGA out of Gross Profit": this.calcPercentageSGA,
+        "% R&D out of Gross Profit": this.calcPercentageRD,
+        "% Depreciation out of Gross Profit": this.calcPercentageDepreciation,
+        "Interest Expense out of Operating Income": this.calcInterestExpenseOfOperatingIncome,
+        "Profit Margin": this.calcProfitMargin,
+        "% Long Term Debt out of Net Earnings": this.calcLongTermDebtToNetEarnings,
+        "Adjusted Debt to Shareholder Equity Ratio": this.calcAdjDebtToEquity,
+        "Return on Equity": this.calcReturnOnEquity,
+        "% of Capital Expenditure in Net Earnings": this.calcPercentageCapitalExpenditure,
+      }
+    }
+  }
 };
 </script>
 

@@ -35,9 +35,10 @@ export default new Vuex.Store({
     modifyPEratio(state, payload) {
       state.PEratio.splice(payload.position, 1, payload.amount);
     },
-    modifyIncomeStatement(state, payload) {
-      console.log(state.IncomeStatement);
-      Vue.set(state.IncomeStatement, payload.stat, payload.amount); 
+    modifyIncomeStatement(state, payload) {     
+      // console.log(payload.amount);
+      Vue.set(state.IncomeStatement, payload.stat, payload.amount);
+      // console.log(state.IncomeStatement.GrossProfit);
     },
     // modifyTotalRevenue(state, n) {Vue.set(state.IncomeStatement, "TotalRevenue", n)},
     // modifyGrossProfit(state, n) {Vue.set(state.IncomeStatement, "GrossProfit",n)},
