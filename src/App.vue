@@ -27,10 +27,10 @@
 import store from './store/Index.js';
 import Header from './components/Header.vue'
 import Past10years from './components/Past10years.vue'
-import IncomeStatement from './components/IncomeStatement.vue'
-import BalanceSheet from './components/BalanceSheet.vue'
-import CashFlowStatement from './components/CashFlowStatement.vue'
-import CurrentMarketPrice from './components/CurrentMarketPrice.vue'
+import IncomeStatement from './components/InputFinancials/IncomeStatement.vue'
+import BalanceSheet from './components/InputFinancials/BalanceSheet.vue'
+import CashFlowStatement from './components/InputFinancials/CashFlowStatement.vue'
+import CurrentMarketPrice from './components/InputFinancials/CurrentMarketPrice.vue'
 import Projections from './components/Projections.vue'
 import FundamentalAnalysis from './components/FundamentalAnalysis'
 
@@ -44,7 +44,7 @@ export default {
     CashFlowStatement,
     CurrentMarketPrice,
     Projections,
-    FundamentalAnalysis
+    FundamentalAnalysis,
   },
   store,
 }

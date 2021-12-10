@@ -51,15 +51,6 @@ input {
   border: hidden;
 }
 
-input:focus {
-  outline: none;
-}
-
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
-
 .Past10years {
   margin-left: 10px;
   margin-right:10px;
@@ -69,12 +60,43 @@ table, th, td {
   width: 100px;
 }
 
+input {
+  width: 90%;
+  border: hidden;
+  background-color: rgb(51, 51, 51);
+  color: white;
+  text-align: center; /* input cursor in the center */
+}
+
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
+}
+
+th {
+  color: rgb(201, 201, 201);
+}
+
 table {
   width: 300px;
+  background-color: rgb(51, 51, 51);
+  color: white;
+  border-radius:10px;
 }
 
 .label {
   width:100px;
+}
+
+/* remove spinner */
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+input:focus{
+  outline: none; /* remove border outline when input in focus */
 }
 
 </style>

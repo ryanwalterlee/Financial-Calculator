@@ -122,21 +122,23 @@ export default {
   margin-right:10px;
 }
 
-input {
-  width: 50%;
-  border: hidden;
+table, th, td {
+  border: 1px solid white;
+  border-collapse: collapse;
 }
 
-table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
+th {
+  color: rgb(201, 201, 201);
 }
 
 table {
   width: 300px;
+  background-color: rgb(51, 51, 51);
+  color: white;
+  border-radius:10px;
 }
 
 .label {
-  width:200px;
+  width:150px;
 }
 </style>
