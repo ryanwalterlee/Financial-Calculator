@@ -139,6 +139,6 @@ table {
 }
 
 .label {
-  width:150px;
+  width:200px;
 }
 </style>
