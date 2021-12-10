@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
   name: "Projections",
   data: function () {
@@ -31,18 +33,22 @@ export default {
     };
   },
   computed: {
+    ...mapGetters([
+      "EPS",
+      "PEratio",
+    ]),
     avgEPSgrowth: function() {
-      const EPSarray = this.$store.getters.EPS;
+      const EPSarray = this.EPS;
       const firstEPS = EPSarray[0];
       const lastEPS = EPSarray[9];
       return ((firstEPS/lastEPS)**0.1) - 1;
     },
     avgPE: function() {
-      const PEarray = this.$store.getters.PEratio;
+      const PEarray = this.PEratio;
       return (PEarray.reduce((x,y) => x + Number(y), 0)/PEarray.length).toFixed(2);
     },
     calc10yearEPS: function() {
-      const firstEPS = this.$store.getters.EPS[0];
+      const firstEPS = this.EPS[0];
       if (firstEPS && this.avgEPSgrowth) {
         return (((1 + this.avgEPSgrowth)**10)*firstEPS).toFixed(2);
       } else {
@@ -58,21 +64,21 @@ export default {
       }
     },
     calcMaxMarketPrice: function() {
-      if (this.calc10yearEPS && !this.$store.getters.EPS.includes(0)) {
-        return (this.calc10yearEPS * Math.max(...this.$store.getters.EPS)).toFixed(2);
+      if (this.calc10yearEPS && !this.EPS.includes(0)) {
+        return (this.calc10yearEPS * Math.max(...this.EPS)).toFixed(2);
       } else {
         return "";
       }
     },
     calcMinMarketPrice: function() {
-      if (this.calc10yearEPS && !this.$store.getters.EPS.includes(0)) {
-        return (this.calc10yearEPS * Math.min(...this.$store.getters.EPS)).toFixed(2);
+      if (this.calc10yearEPS && !this.EPS.includes(0)) {
+        return (this.calc10yearEPS * Math.min(...this.EPS)).toFixed(2);
       } else {
         return "";
       }
     },
     getCurrentMarketPrice: function() {
-      return this.$store.getters.CurrentMarketPrice;     
+      return this.CurrentMarketPrice;     
     },
     calcAnnualGrowthRate: function() {
       if (this.calc10yearMarketPrice && this.getCurrentMarketPrice) {

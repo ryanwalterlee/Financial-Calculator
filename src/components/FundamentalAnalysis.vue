@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: "Projections",
   data: function () {
@@ -34,77 +36,88 @@ export default {
     };
   },
   computed: {
+    ...mapGetters([
+      "TotalRevenue",
+      "GrossProfit",
+      "SGA",
+      "RD",
+      "Depreciation",
+      "OperatingIncome",
+      "InterestExpense",
+      "SaleOfAsset",
+      "NetEarnings",
+      "LongTermDebt",
+      "TotalLiabilities",
+      "ShareholderEquity",
+      "TreasuryStock",
+      "CapitalExpenditure",
+    ]),
     calcGrossProfitMargin: function() {
-      if (this.$store.getters.GrossProfit && this.$store.getters.TotalRevenue) {
-        return (this.$store.getters.GrossProfit / this.$store.getters.TotalRevenue).toFixed(2);
+      if (this.GrossProfit && this.TotalRevenue) {
+        return (this.GrossProfit / this.TotalRevenue).toFixed(2);
       } else {
         return "";
       }
     },
     calcPercentageSGA: function() {
-      if (this.$store.getters.SGA && this.calcGrossProfitMargin) {
-        return (this.$store.getters.SGA / this.calcGrossProfitMargin).toFixed(2);
+      if (this.SGA && this.calcGrossProfitMargin) {
+        return (this.SGA / this.calcGrossProfitMargin).toFixed(2);
       } else {
         return "";
       }
     },
     calcPercentageRD: function() {
-      if (this.$store.getters.RD && this.calcGrossProfitMargin) {
-        return (this.$store.getters.RD / this.calcGrossProfitMargin).toFixed(2);
+      if (this.RD && this.calcGrossProfitMargin) {
+        return (this.RD / this.calcGrossProfitMargin).toFixed(2);
       } else {
         return "";
       }
     },
     calcPercentageDepreciation: function() {
-      if (this.$store.getters.Depreciation && this.calcGrossProfitMargin) {
-        return (this.$store.getters.Depreciation / this.calcGrossProfitMargin).toFixed(2);
+      if (this.Depreciation && this.calcGrossProfitMargin) {
+        return (this.Depreciation / this.calcGrossProfitMargin).toFixed(2);
       } else {
         return "";
       }
     },
     calcInterestExpenseOfOperatingIncome: function() {
-      if (this.$store.getters.InterestExpense && this.$store.getters.OperatingIncome) {
-        return (this.$store.getters.InterestExpense / this.$store.getters.OperatingIncome).toFixed(2);
+      if (this.InterestExpense && this.OperatingIncome) {
+        return (this.InterestExpense / this.OperatingIncome).toFixed(2);
       } else {
         return "";
       }
     },
     calcProfitMargin: function() {
-      if (this.$store.getters.NetEarnings && this.$store.getters.TotalRevenue) {
-        return (this.$store.getters.NetEarnings / this.$store.getters.TotalRevenue).toFixed(2);
+      if (this.NetEarnings && this.TotalRevenue) {
+        return (this.NetEarnings / this.TotalRevenue).toFixed(2);
       } else {
         return "";
       }
     },
     calcLongTermDebtToNetEarnings: function() {
-      if (this.$store.getters.LongTermDebt && this.$store.getters.NetEarnings) {
-        return (this.$store.getters.LongTermDebt / this.$store.getters.NetEarnings).toFixed(2);
+      if (this.LongTermDebt && this.NetEarnings) {
+        return (this.LongTermDebt / this.NetEarnings).toFixed(2);
       } else {
         return "";
       }
     },
     calcAdjDebtToEquity: function() {
-      const shareholderEquity = this.$store.getters.ShareholderEquity;
-      const treasuryStock = this.$store.getters.TreasuryStock;
-      const totalLiabilities = this.$store.getters.TotalLiabilities;
-      if (totalLiabilities && (shareholderEquity || treasuryStock)) {
-        return (totalLiabilities / (shareholderEquity + treasuryStock)).toFixed(2);
+      if (this.TotalLiabilities && (this.ShareholderEquity || this.TreasuryStock)) {
+        return (this.TotalLiabilities / (this.ShareholderEquity + this.TreasuryStock)).toFixed(2);
       } else {
         return "";
       }
     },
     calcReturnOnEquity: function() {
-      if (this.$store.getters.NetEarnings && this.$store.getters.ShareholderEquity) {
-        return (this.$store.getters.NetEarnings / this.$store.getters.ShareholderEquity).toFixed(2);
+      if (this.NetEarnings && this.ShareholderEquity) {
+        return (this.NetEarnings / this.ShareholderEquity).toFixed(2);
       } else {
         return "";
       }
     },
     calcPercentageCapitalExpenditure: function() {
-      console.log(this.$store.getters.CapitalExpenditure);
-      console.log();
-      if (this.$store.getters.CapitalExpenditure && this.$store.getters.NetEarnings) {
-        return (this.$store.getters.CapitalExpenditure / this.$store.getters.NetEarnings).toFixed(2);
+      if (this.CapitalExpenditure && this.NetEarnings) {
+        return (this.CapitalExpenditure / this.NetEarnings).toFixed(2);
       } else {
         return "";
       }
