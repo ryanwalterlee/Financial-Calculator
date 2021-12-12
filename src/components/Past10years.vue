@@ -34,11 +34,11 @@ export default {
   },
   methods: {
     modifyEPS(position, amount) {
-      this.$store.commit('modifyEPS', 
+      this.$store.commit('calculations/modifyEPS', 
         {position:position, amount:amount})
     },
     modifyPEratio(position, amount) {
-      this.$store.commit('modifyPEratio', 
+      this.$store.commit('calculations/modifyPEratio', 
         {position:position, amount:amount})
     },
   }

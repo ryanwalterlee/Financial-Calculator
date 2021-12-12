@@ -36,7 +36,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters("calculations", [
       "TotalRevenue",
       "GrossProfit",
       "SGA",

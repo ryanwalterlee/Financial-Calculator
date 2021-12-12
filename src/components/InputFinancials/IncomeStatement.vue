@@ -33,7 +33,7 @@ export default {
   },
   methods: {
     modifyIncomeStatement: function (stat, n) {
-      this.$store.commit("modifyIncomeStatement", {stat: stat, amount: n});
+      this.$store.commit("calculations/modifyIncomeStatement", {stat: stat, amount: n});
     }
   }
 }

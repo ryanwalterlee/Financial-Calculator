@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     modifyCapitalExpenditure(stat, n) {
-      this.$store.commit("modifyCapitalExpenditure", {stat:stat, amount:n});
+      this.$store.commit("calculations/modifyCapitalExpenditure", {stat:stat, amount:n});
     }
   }
 }

@@ -28,7 +28,7 @@ export default {
   },
   methods: {
     modifyBalanceSheet: function(stat, n) {
-      this.$store.commit("modifyBalanceSheet", {stat:stat, amount:n});
+      this.$store.commit("calculations/modifyBalanceSheet", {stat:stat, amount:n});
     }
   }
 }

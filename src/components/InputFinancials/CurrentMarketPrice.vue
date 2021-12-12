@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     modifyCurrentMarketPrice: function(n) {
-      this.$store.commit("modifyCurrentMarketPrice", n);
+      this.$store.commit("calculations/modifyCurrentMarketPrice", n);
     }
   }
 };
