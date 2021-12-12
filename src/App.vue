@@ -62,7 +62,9 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-image: url('/src/assets/MainBackgroundImage.jpg');
+  background-image: url('./assets/MainBackgroundImage.jpg');
+  background-size: cover;
+  height: 100vh; /* increase height of app */
 }
 
 .fundamentals {

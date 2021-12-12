@@ -181,7 +181,7 @@ export default {
     // in increasing order of financial strength: (red, yellow, green)
     calcFundamentalAnalysis: function() {
       return {
-        "Gross Profit Margin": this.calcGrossProfitMargin,
+        "Gross Profit Margin": this.calcGrossProfitMargin, 
         "% SGA out of Gross Profit": this.calcPercentageSGA,
         "% R&D out of Gross Profit": this.calcPercentageRD,
         "% Depreciation out of Gross Profit": this.calcPercentageDepreciation,

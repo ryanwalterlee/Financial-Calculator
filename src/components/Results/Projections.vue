@@ -145,11 +145,9 @@ table, th, td {
   border: 1px solid white;
   border-collapse: collapse;
 }
-
 th {
   color: rgb(201, 201, 201);
 }
-
 table {
   width: 300px;
   background-color: rgb(51, 51, 51);
