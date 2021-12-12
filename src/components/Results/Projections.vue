@@ -6,8 +6,8 @@
       </thead>
       <tbody>
         <tr v-for="projection in ProjectionMetrics" :key="projection">
-          <td class="label">{{ projection }}</td>
-          <td>{{ calcProjections[projection] }}</td>
+          <td class="label" :class="calcProjections[projection][1]">{{ projection }}</td>
+          <td :class="calcProjections[projection][1]">{{ calcProjections[projection][0] }}</td>
         </tr>
       </tbody>
     </table>
@@ -36,6 +36,7 @@ export default {
     ...mapGetters("calculations", [
       "EPS",
       "PEratio",
+      "CurrentMarketPrice"
     ]),
     avgEPSgrowth: function() {
       const EPSarray = this.EPS;
@@ -50,29 +51,34 @@ export default {
     calc10yearEPS: function() {
       const firstEPS = this.EPS[0];
       if (firstEPS && this.avgEPSgrowth) {
-        return (((1 + this.avgEPSgrowth)**10)*firstEPS).toFixed(2);
+        const result = (((1 + this.avgEPSgrowth)**10)*firstEPS).toFixed(2);
+        
+        return [result, ""];
       } else {
-        return "";
+        return ["",""];
       }
       
     },
     calc10yearMarketPrice: function() {
-      if (this.calc10yearEPS && this.avgPE) {
-        return (this.calc10yearEPS * this.avgPE).toFixed(2);
+      if (this.calc10yearEPS[0] && this.avgPE) {
+        const result = (this.calc10yearEPS[0] * this.avgPE).toFixed(2);
+        return result;
       } else {
         return "";
       }
     },
     calcMaxMarketPrice: function() {
-      if (this.calc10yearEPS && !this.EPS.includes(0)) {
-        return (this.calc10yearEPS * Math.max(...this.EPS)).toFixed(2);
+      if (this.calc10yearEPS[0] && !this.EPS.includes(0)) {
+        const result = (this.calc10yearEPS[0] * Math.max(...this.PEratio)).toFixed(2);
+        return result;
       } else {
         return "";
       }
     },
     calcMinMarketPrice: function() {
-      if (this.calc10yearEPS && !this.EPS.includes(0)) {
-        return (this.calc10yearEPS * Math.min(...this.EPS)).toFixed(2);
+      if (this.calc10yearEPS[0] && !this.EPS.includes(0)) {
+        const result = (this.calc10yearEPS[0] * Math.min(...this.PEratio)).toFixed(2);
+        return result;
       } else {
         return "";
       }
@@ -81,32 +87,45 @@ export default {
       return this.CurrentMarketPrice;     
     },
     calcAnnualGrowthRate: function() {
+      console.log(this.getCurrentMarketPrice)
       if (this.calc10yearMarketPrice && this.getCurrentMarketPrice) {
-        return (((this.calc10yearMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+        const result = (((this.calc10yearMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+        let color = "yellow";
+        if (result > 0.05) {color = "green"}
+        else if (result < 0.02) {color = "red"}
+        return [result, color]
       } else {
-        return "";
+        return ["",""];
       }
     },
     calcMaxGrowthRate: function() {
       if (this.calcMaxMarketPrice && this.getCurrentMarketPrice) {
-        return (((this.calcMaxMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+        const result = (((this.calcMaxMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+        let color = "yellow";
+        if (result > 0.08) {color = "green"}
+        else if (result < 0.05) {color = "red"}
+        return [result, color]
       } else {
-        return "";
+        return ["",""];
       }
     },
     calcMinGrowthRate: function() {
       if (this.calcMinMarketPrice && this.getCurrentMarketPrice) {
-        return (((this.calcMinMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+        const result = (((this.calcMinMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
+        let color = "yellow";
+        if (result > 0.02) {color = "green"}
+        else if (result < 0) {color = "red"}
+        return [result, color]
       } else {
-        return "";
+        return ["",""];
       }
     },
     calcProjections: function() {
       return {
         "EPS in 10 years": this.calc10yearEPS,
-        "Market Price in 10 years": this.calc10yearMarketPrice,
-        "Max Market Price": this.calcMaxMarketPrice,
-        "Min Market Price": this.calcMinMarketPrice,
+        "Market Price in 10 years": [this.calc10yearMarketPrice, this.calcAnnualGrowthRate[1]],
+        "Max Market Price": [this.calcMaxMarketPrice, this.calcMaxGrowthRate[1]],
+        "Min Market Price": [this.calcMinMarketPrice, this.calcMinGrowthRate[1]],
         "Annual Growth Rate": this.calcAnnualGrowthRate,
         "Max Growth Rate": this.calcMaxGrowthRate,
         "Min Growth Rate": this.calcMinGrowthRate,
@@ -140,5 +159,18 @@ table {
 
 .label {
   width:200px;
+}
+
+/* next 3 styles for styling results depending on how good results are */
+.green {
+  color: rgb(0, 168, 90);
+}
+
+.red {
+  color: red;
+}
+
+.yellow {
+  color: rgb(255, 230, 0);
 }
 </style>
