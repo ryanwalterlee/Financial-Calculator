@@ -7,7 +7,10 @@
       <tbody>
         <tr v-for="stat in Object.keys(stats)" :key="stat">
           <td class="label">{{ stat }}</td>
-          <td><input type="Number" @change="modifyIncomeStatement(stats[stat], $event.target.value)" /></td>
+          <td><input
+            type="Number"
+            @change="modifyIncomeStatement(stats[stat], $event.target.value)"
+            v-model="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>
     </table>
@@ -15,7 +18,8 @@
 </template>
 
 <script>
-
+import { mapGetters } from "vuex";
+import Vue from "vue";
 
 export default {
   name: 'IncomeStatement',
@@ -28,12 +32,38 @@ export default {
           'Operating Income': "OperatingIncome",
           'Interest Expense': "InterestExpense",
           'Sale of Asset': "SaleOfAsset",
-          'Net Earnings': "NetEarnings",}
+          'Net Earnings': "NetEarnings",},
+
+          // maintain data object from API, binded with v-model
+          inputFromAPI: {'Total Revenue': "",
+          'Gross Profit': "",
+          'Selling, General and Admin': "",
+          'Research & Development': "",
+          'Depreciation': "",
+          'Operating Income': "",
+          'Interest Expense': "",
+          'Sale of Asset': "",
+          'Net Earnings': "",}
           }      
+  },
+  computed: {
+    ...mapGetters("yahooFinance", [
+      "getFinancials",
+    ]),
   },
   methods: {
     modifyIncomeStatement: function (stat, n) {
       this.$store.commit("calculations/modifyIncomeStatement", {stat: stat, amount: n});
+    },
+  },
+  watch: {
+
+    // watch for changes in computed property 
+    // updates data object accordingly
+    getFinancials: function() {      
+      for (let stat in this.inputFromAPI) {
+        Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]])
+      }
     }
   }
 }

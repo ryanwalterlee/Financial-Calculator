@@ -3,21 +3,23 @@
 
       <Header class="header" message="Financial Calculator" />
 
+      <enter-ticker/>
+
       <!-- div container for inputs -->
       <div class="fundamentals">
-        <Past10years/>
-        <IncomeStatement/>
+        <past-ten-years/>
+        <income-statement/>
         <div class="balancecash">
-          <BalanceSheet/>
-          <CashFlowStatement/>
-          <CurrentMarketPrice/>
+          <balance-sheet/>
+          <cash-flow-statement/>
+          <current-market-price/>
         </div>
       </div>
 
       <!-- div container for results -->
       <div class="results">
-        <Projections/>
-        <FundamentalAnalysis/>
+        <projections/>
+        <fundamental-analysis/>
       </div>
 
   </div>
@@ -26,19 +28,21 @@
 <script>
 import store from './store/Index.js';
 import Header from './components/Header.vue'
-import Past10years from './components/InputFinancials/Past10years.vue'
+import PastTenYears from './components/InputFinancials/PastTenYears.vue'
 import IncomeStatement from './components/InputFinancials/IncomeStatement.vue'
 import BalanceSheet from './components/InputFinancials/BalanceSheet.vue'
 import CashFlowStatement from './components/InputFinancials/CashFlowStatement.vue'
 import CurrentMarketPrice from './components/InputFinancials/CurrentMarketPrice.vue'
 import Projections from './components/Results/Projections.vue'
-import FundamentalAnalysis from './components/Results/FundamentalAnalysis'
+import FundamentalAnalysis from './components/Results/FundamentalAnalysis.vue'
+import EnterTicker from './components/SearchTicker/EnterTicker.vue'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Past10years,
+    EnterTicker,
+    PastTenYears,
     IncomeStatement,
     BalanceSheet,
     CashFlowStatement,

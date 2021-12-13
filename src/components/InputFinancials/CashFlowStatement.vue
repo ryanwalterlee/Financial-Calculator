@@ -7,7 +7,10 @@
       <tbody>
         <tr v-for="stat in Object.keys(stats)" :key="stat">
           <td class="label">{{ stat }}</td>
-          <td><input type="Number" @change="modifyCapitalExpenditure(stats[stat], $event.target.value)"/></td>
+          <td><input 
+            type="Number" 
+            @change="modifyCapitalExpenditure(stats[stat], $event.target.value)"
+            :v-model="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>
     </table>
@@ -15,16 +18,34 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import Vue from "vue";
+
 export default {
   name: 'CashFlowStatement',
   data: function() { 
           return {
-            stats: {'Capital Expenditure': "CapitalExpenditure"}
-          }     
+            stats: {'Capital Expenditure': "CapitalExpenditure"},
+
+            inputFromAPI: {'Capital Expenditure': "",
+          },
+        }     
+  },
+  computed: {
+    ...mapGetters("yahooFinance", [
+      "getFinancials",
+    ]),
   },
   methods: {
-    modifyCapitalExpenditure(stat, n) {
-      this.$store.commit("calculations/modifyCapitalExpenditure", {stat:stat, amount:n});
+    modifyCashFlowStatement(stat, n) {
+      this.$store.commit("calculations/modifyCashFlowStatement", {stat:stat, amount:n});
+    }
+  },
+  watch: {
+    getFinancials: function() {      
+      for (let stat in this.inputFromAPI) {
+        Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
+      }
     }
   }
 }

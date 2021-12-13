@@ -87,7 +87,6 @@ export default {
       return this.CurrentMarketPrice;     
     },
     calcAnnualGrowthRate: function() {
-      console.log(this.getCurrentMarketPrice)
       if (this.calc10yearMarketPrice && this.getCurrentMarketPrice) {
         const result = (((this.calc10yearMarketPrice/this.getCurrentMarketPrice)**0.1)-1).toFixed(2);
         let color = "yellow";

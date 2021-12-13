@@ -8,7 +8,10 @@
         <tr v-for="stat in Object.keys(stats)" :key="stat">
           <td class="label">{{ stat }}</td>
           <td>
-            <input type="Number" @change="modifyBalanceSheet(stats[stat], $event.target.value)" />
+            <input 
+              type="Number" 
+              @change="modifyBalanceSheet(stats[stat], $event.target.value)" 
+              v-model="inputFromAPI[stat]"/>
           </td>
         </tr>
       </tbody>
@@ -17,18 +20,39 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import Vue from "vue";
+
 export default {
   name: 'BalanceSheet',
   data: function() { 
           return {stats: {'Long Term Debt': "LongTermDebt",
           'Total Liabilities': "TotalLiabilities",
           'Shareholders\'s Equity': "ShareholderEquity",
-          'Treasury Stock': "TreasuryStock"}
-          }      
+          'Treasury Stock': "TreasuryStock"},
+
+          inputFromAPI: {'Long Term Debt': "",
+          'Total Liabilities': "",
+          'Shareholders\'s Equity': "",
+          'Treasury Stock': "",
+          },
+        }      
+  },
+  computed: {
+    ...mapGetters("yahooFinance", [
+      "getFinancials",
+    ]),
   },
   methods: {
     modifyBalanceSheet: function(stat, n) {
       this.$store.commit("calculations/modifyBalanceSheet", {stat:stat, amount:n});
+    }
+  },
+  watch: {
+    getFinancials: function() {      
+      for (let stat in this.inputFromAPI) {
+        Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
+      }
     }
   }
 }
