@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header-container">
     <header class="header"><strong>{{ message }}</strong></header>
   </div>
 </template>
@@ -24,5 +24,9 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.header-container {
+  margin-bottom: 20px;
 }
 </style>
