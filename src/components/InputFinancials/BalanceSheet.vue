@@ -11,7 +11,7 @@
             <input 
               type="Number" 
               @change="modifyBalanceSheet(stats[stat], $event.target.value)" 
-              v-model="inputFromAPI[stat]"/>
+              :value="inputFromAPI[stat]"/>
           </td>
         </tr>
       </tbody>
@@ -52,6 +52,7 @@ export default {
     getFinancials: function() {      
       for (let stat in this.inputFromAPI) {
         Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
+        this.modifyBalanceSheet(this.stats[stat], this.inputFromAPI[stat]);
       }
     }
   }

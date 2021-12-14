@@ -10,7 +10,7 @@
           <td><input
             type="Number"
             @change="modifyIncomeStatement(stats[stat], $event.target.value)"
-            v-model="inputFromAPI[stat]"/></td>
+            :value="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>
     </table>
@@ -62,9 +62,12 @@ export default {
     // updates data object accordingly
     getFinancials: function() {      
       for (let stat in this.inputFromAPI) {
-        Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]])
+        Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
+
+        // required because change in v-model does not trigger @change event
+        this.modifyIncomeStatement(this.stats[stat], this.inputFromAPI[stat]);
       }
-    }
+    },
   }
 }
 

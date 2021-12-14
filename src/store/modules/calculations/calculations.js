@@ -43,7 +43,7 @@ export default {
       Vue.set(state.BalanceSheet, payload.stat, payload.amount);
     },
 
-    modifyCapitalExpenditure(state, payload) {
+    modifyCashFlowStatement(state, payload) {
       Vue.set(state.CashFlowStatement, payload.stat, payload.amount);
     },
     modifyCurrentMarketPrice(state, n) { state.CurrentMarketPrice = n },

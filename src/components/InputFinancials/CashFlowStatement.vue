@@ -10,7 +10,7 @@
           <td><input 
             type="Number" 
             @change="modifyCapitalExpenditure(stats[stat], $event.target.value)"
-            :v-model="inputFromAPI[stat]"/></td>
+            :value="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>
     </table>
@@ -45,6 +45,7 @@ export default {
     getFinancials: function() {      
       for (let stat in this.inputFromAPI) {
         Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
+        this.modifyCashFlowStatement(this.stats[stat], this.inputFromAPI[stat]);
       }
     }
   }

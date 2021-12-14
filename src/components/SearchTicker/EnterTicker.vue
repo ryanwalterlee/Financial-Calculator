@@ -1,7 +1,11 @@
 <template>
   <div>
     <h3>Enter Ticker:</h3>
-    <input class="ticker" type="text" spellcheck="false" v-model="ticker" />
+    <input class="ticker" 
+      type="text" 
+      spellcheck="false" 
+      placeholder="Enter Ticker" 
+      v-model="ticker" />
     <input class="submit" type="submit" @click="fetchFinancials(ticker)" />
   </div>
 </template>
