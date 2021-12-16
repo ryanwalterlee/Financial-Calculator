@@ -13,7 +13,6 @@ export default {
       Depreciation: 0,
       OperatingIncome: 0,
       InterestExpense: 0,
-      SaleOfAsset: 0,
       NetEarnings: 0,
     },
     BalanceSheet: {
@@ -59,7 +58,6 @@ export default {
     Depreciation: state => state.IncomeStatement.Depreciation,
     OperatingIncome: state => state.IncomeStatement.OperatingIncome,
     InterestExpense: state => state.IncomeStatement.InterestExpense,
-    SaleOfAsset: state => state.IncomeStatement.SaleOfAsset,
     NetEarnings: state => state.IncomeStatement.NetEarnings,
     LongTermDebt: state => state.BalanceSheet.LongTermDebt,
     TotalLiabilities: state => state.BalanceSheet.TotalLiabilities,

@@ -10,8 +10,16 @@
         </tr>
         <tr v-for="year in years" :key="year">
           <td class="label">{{ year }} year ago</td>
-          <td class="stats"><input type="Number" @change="modifyEPS(year-1, $event.target.value)"/></td>
-          <td class="stats"><input type="Number" @change="modifyPEratio(year-1, $event.target.value)"/></td>
+          <td class="stats">
+            <input type="Number"
+              @change="modifyEPS(year-1, $event.target.value)"
+              :value="EPS[year - 1]"/>
+          </td>
+          <td class="stats">
+            <input type="Number" 
+              @change="modifyPEratio(year-1, $event.target.value)"
+              :value="PEratio[year - 1]"/>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -19,18 +27,26 @@
 </template>
 
 <script>
-
+import { mapGetters } from "vuex";
 export default {
   name: 'Past10years',
+  data: function() {
+    return {
+      EPS: new Array(10).fill(""),
+      PEratio: new Array(10).fill(""),
+    }
+  },
   computed: {
-      years: function() {
-          let array = [];
-          for (let i = 1; i <= 10; i++) {
-              array.push(i);
-          }
-          return array;
-      },
-      
+    years: function() {
+        let array = [];
+        for (let i = 1; i <= 10; i++) {
+            array.push(i);
+        }
+        return array;
+    },
+    ...mapGetters("yahooFinance", [
+      "getHistoricData",
+    ]),  
   },
   methods: {
     modifyEPS(position, amount) {
@@ -41,6 +57,17 @@ export default {
       this.$store.commit('calculations/modifyPEratio', 
         {position:position, amount:amount})
     },
+  },
+  watch: {
+
+    // watch for changes when API searches for ticker and updates store
+    // afterwhich, proceed to update :value of inputs
+    getHistoricData: function() {
+      for (let year = 0; year < 10; year++) {
+        this.EPS.splice(year, 1, this.getHistoricData.EPS[year]);
+        this.PEratio.splice(year, 1, this.getHistoricData.PEratio[year]);
+      }
+    }
   }
 }
 </script>

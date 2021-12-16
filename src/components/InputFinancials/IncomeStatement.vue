@@ -31,7 +31,6 @@ export default {
           'Depreciation': "Depreciation",
           'Operating Income': "OperatingIncome",
           'Interest Expense': "InterestExpense",
-          'Sale of Asset': "SaleOfAsset",
           'Net Earnings': "NetEarnings",},
 
           // maintain data object from API, binded with v-model
@@ -42,7 +41,6 @@ export default {
           'Depreciation': "",
           'Operating Income': "",
           'Interest Expense': "",
-          'Sale of Asset': "",
           'Net Earnings': "",}
           }      
   },

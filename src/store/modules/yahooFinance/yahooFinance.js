@@ -4,8 +4,8 @@ import axios from 'axios';
 export default {
   namespaced: true, // prevent methods going to global namespace
   state: {
-    // EPS: new Array(10).fill(0),
-    // PEratio: new Array(10).fill(0),
+    EPS: new Array(10).fill(0),
+    PEratio: new Array(10).fill(0),
     IncomeStatement: {
       TotalRevenue: "",
       GrossProfit: "",
@@ -14,7 +14,6 @@ export default {
       Depreciation: "",
       OperatingIncome: "",
       InterestExpense: "",
-      SaleOfAsset: "",
       NetEarnings: "",
     },
     BalanceSheet: {
@@ -29,12 +28,12 @@ export default {
   },
 
   mutations: {
-    // modifyEPS(state, payload) {
-    //   state.EPS.splice(payload.position, 1, payload.amount);
-    // },
-    // modifyPEratio(state, payload) {
-    //   state.PEratio.splice(payload.position, 1, payload.amount);
-    // },
+    modifyEPS(state, payload) {
+      state.EPS.splice(payload.position, 1, payload.amount);
+    },
+    modifyPEratio(state, payload) {
+      state.PEratio.splice(payload.position, 1, payload.amount);
+    },
     modifyIncomeStatement(state, payload) {
       Vue.set(state.IncomeStatement, payload.stat, payload.amount);
     },
@@ -49,6 +48,12 @@ export default {
   },
 
   getters: {
+    getHistoricData: state => {
+      return {
+        "EPS": state.EPS,
+        "PEratio": state.PEratio,
+      }
+    },
     getFinancials: state => {
       return {
         "TotalRevenue": state.IncomeStatement.TotalRevenue,
@@ -58,7 +63,6 @@ export default {
         "Depreciation": state.IncomeStatement.Depreciation,
         "OperatingIncome": state.IncomeStatement.OperatingIncome,
         "InterestExpense": state.IncomeStatement.InterestExpense,
-        "SaleOfAsset": state.IncomeStatement.SaleOfAsset,
         "NetEarnings": state.IncomeStatement.NetEarnings,
         "LongTermDebt": state.BalanceSheet.LongTermDebt,
         "TotalLiabilities": state.BalanceSheet.TotalLiabilities,
@@ -85,9 +89,23 @@ export default {
       commit("modifyIncomeStatement", {stat: "NetEarnings", amount: incomeStatement.net_income_loss.value});
       commit("modifyBalanceSheet", {stat: "LongTermDebt", amount: balanceSheet.noncurrent_liabilities.value});
       commit("modifyBalanceSheet", {stat: "TotalLiabilities", amount: balanceSheet.liabilities.value});
-      commit("modifyBalanceSheet", {stat: "ShareholderEquity", amount: balanceSheet.equity.value});
+      commit("modifyBalanceSheet", {stat: "ShareholderEquity", amount: balanceSheet.equity.value});     
+    },
 
-      
-    }
+    async fetchTenYearEPS({ commit }, ticker) {
+      const json = await axios.get(`http://localhost:3000/eps?ticker=${ticker}`);
+      const EPSarray = json.data.eps;
+      for (let i = 0; i < 10; i++) {
+        commit("modifyEPS", {position: i, amount: EPSarray[i]});
+      }
+    },
+
+    async fetchTenYearPE({ commit }, ticker) {
+      const json = await axios.get(`http://localhost:3000/pe?ticker=${ticker}`);
+      const PEarray = json.data.pe;
+      for (let i = 0; i < 10; i++) {
+        commit("modifyPEratio", {position: i, amount: PEarray[i]})
+      }
+    },
   }
 }

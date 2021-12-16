@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>Enter Ticker:</h3>
     <input class="ticker" 
       type="text" 
       spellcheck="false" 
@@ -20,10 +19,9 @@ export default {
   },
   methods: {
     fetchFinancials: function (ticker) {
-      this.$store.dispatch(
-        "yahooFinance/fetchFinancials",
-        ticker.toUpperCase()
-      );
+      this.$store.dispatch("yahooFinance/fetchFinancials", ticker.toUpperCase());
+      this.$store.dispatch("yahooFinance/fetchTenYearEPS", ticker.toUpperCase());
+      this.$store.dispatch("yahooFinance/fetchTenYearPE", ticker.toUpperCase());
     },
   },
 };
@@ -54,13 +52,6 @@ input:focus {
   outline: none; /* remove border outline when input in focus */
 }
 
-h3 {
-  color: rgb(201, 201, 201);
-  margin-bottom: 10px;
-  margin-top: 10px;
-  font-family: "Roboto Condensed", sans-serif;
-}
-
 .submit {
   color: black;
   background-color: rgb(0, 168, 90);
@@ -71,11 +62,16 @@ h3 {
   background: rgb(0, 131, 70);
   box-shadow: 5px5px5px#eee;
   text-shadow: none;
+  transition: 0.5s ease-out;
 }
 
 .ticker {
   font-family: "Roboto Condensed", sans-serif;
   text-transform: uppercase; /* all inputs uppercase */
-  margin-top: 0px;
+  margin-top: 10px;
+}
+
+.ticker::placeholder {
+  font-weight: normal;
 }
 </style>
