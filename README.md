@@ -31,7 +31,7 @@ Users can enter a ticker and click Submit, the app will
 1. Send a get request using the input ticker to Yahoo Finance API, and will fill auto fill in information in the input boxes
 2. Send a get request to another of my local API (MacroTrend WebScraping API) which will go to MacroTrends website and WebScrapes historic financial data and also auto fills in information after retrieving it
 
-![Alt text](/assets/BasicWebsite.jpg?raw=true "Screenshot of a search")
+![Screenshot of website](src/assets/BasicWebsite.jpg)
 
 ### Benefits
 Previously, I had an excel sheet that looks similar to this website. However, I would need to manually visit each MacroTrends and Yahoo Finance and manually copy-paste data into the input fields. This task not only takes about 5 minutes per company, but is prone to human errors (such as missing out 1 digit when copying). Therefore, this website not only improves accuracy of data transfer to 100%, but **automates a 5 minute task into a mere 10 seconds**, which is a **30x improvement in speed**.
