@@ -28,8 +28,8 @@ Use this web application to do fundamental analysis on stocks. Enter the require
 
 Users can enter a ticker and click Submit, the app will
 
-1. Send a get request using the input ticker to Yahoo Finance API, and will fill auto fill in information in the input boxes
-2. Send a get request to another of my local API (MacroTrend WebScraping API) which will go to MacroTrends website and WebScrapes historic financial data and also auto fills in information after retrieving it
+1. Send a get request using the input ticker to Yahoo Finance API, and automatically fill in information in the input boxes
+2. Send a get request to another of my local API (MacroTrend WebScraping API) which will go to MacroTrends website and WebScrapes historic financial data and also autotomatically fills in information after retrieving it
 
 ![Screenshot of website](src/assets/BasicWebsite.jpg)
 
