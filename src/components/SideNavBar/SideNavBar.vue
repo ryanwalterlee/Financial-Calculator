@@ -1,6 +1,6 @@
 <template>
   <div class="side-nav-bar">
-    <router-link class="link" to="/">Home</router-link>
+    <router-link class="link" to="/" @click.native="clearAllState()">Home</router-link> <!-- @click does not trigger -->
     <router-link class="link" to="/predictions">Time Series Model</router-link>
   </div>
 </template>
@@ -8,6 +8,11 @@
 <script>
 export default {
   name: "SideNavBar",
+  methods: {
+    clearAllState: function() {
+      this.$store.commit("calculations/clearAll");
+    }
+  }
 };
 </script>
 
