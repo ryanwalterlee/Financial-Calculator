@@ -68,7 +68,7 @@ input:focus {
 .ticker {
   font-family: "Roboto Condensed", sans-serif;
   text-transform: uppercase; /* all inputs uppercase */
-  margin-top: 10px;
+  margin-top: 60px;
 }
 
 .ticker::placeholder {

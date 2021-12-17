@@ -26,7 +26,4 @@ export default {
   justify-content: center;
 }
 
-.header-container {
-  margin-bottom: 20px;
-}
 </style>
