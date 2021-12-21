@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import store from '../../store/Index.js';
 import PastTenYears from './InputFinancials/PastTenYears.vue'
 import IncomeStatement from './InputFinancials/IncomeStatement.vue'
 import BalanceSheet from './InputFinancials/BalanceSheet.vue'
@@ -32,7 +31,7 @@ import CashFlowStatement from './InputFinancials/CashFlowStatement.vue'
 import CurrentMarketPrice from './InputFinancials/CurrentMarketPrice.vue'
 import Projections from './Results/Projections.vue'
 import FundamentalAnalysis from './Results/FundamentalAnalysis.vue'
-import EnterTicker from './SearchTicker/EnterTicker.vue'
+import EnterTicker from './EnterTickerFinancials/EnterTickerFinancials.vue'
 
 export default {
   name: 'FinancialCalculator',
@@ -46,7 +45,6 @@ export default {
     Projections,
     FundamentalAnalysis,
   },
-  store,
 }
 </script>
 

@@ -9,8 +9,8 @@
           <td class="label">{{ stat }}</td>
           <td>
             <input 
-              type="Number" 
-              @change="modifyBalanceSheet(stats[stat], $event.target.value)" 
+              type="Number"
+              @change="modifyBalanceSheet(stat, $event.target.value)"
               :value="inputFromAPI[stat]"/>
           </td>
         </tr>

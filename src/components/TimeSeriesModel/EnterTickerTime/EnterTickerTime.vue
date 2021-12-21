@@ -5,7 +5,7 @@
       spellcheck="false" 
       placeholder="Enter Ticker" 
       v-model="ticker" />
-    <input class="submit" type="submit" @click="fetchFinancials(ticker)" />
+    <input class="submit" type="submit" @click="fetchHistoricPrice(ticker)" />
   </div>
 </template>
 
@@ -18,20 +18,23 @@ export default {
     };
   },
   methods: {
-    fetchFinancials: function (ticker) {
-      this.$store.dispatch("yahooFinance/fetchFinancials", ticker.toUpperCase());
-      this.$store.dispatch("yahooFinance/fetchTenYearEPS", ticker.toUpperCase());
-      this.$store.dispatch("yahooFinance/fetchTenYearPE", ticker.toUpperCase());
+    fetchHistoricPrice: function (ticker) {
+      this.$store.dispatch("yahooFinance/fetchHistoricPrices", ticker.toUpperCase());
     },
   },
+  
 };
 </script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap");
+div {
+  display: flex;
+  flex-direction: column;
+}
 
 input {
-  width: 90%;
+  width: 250px;
   border: hidden;
   border-radius: 10px;
   height: 30px;

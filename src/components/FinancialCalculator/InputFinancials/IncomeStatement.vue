@@ -9,7 +9,7 @@
           <td class="label">{{ stat }}</td>
           <td><input
             type="Number"
-            @change="modifyIncomeStatement(stats[stat], $event.target.value)"
+            @change="modifyIncomeStatement(stat, $event.target.value)"
             :value="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>

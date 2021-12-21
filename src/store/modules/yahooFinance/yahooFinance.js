@@ -1,5 +1,6 @@
 import Vue from "vue";
 import axios from 'axios';
+var yahooFinance = require('yahoo-finance');
 
 export default {
   namespaced: true, // prevent methods going to global namespace
@@ -25,6 +26,7 @@ export default {
     CashFlowStatement: {
       CapitalExpenditure: "",
     },
+    historicalDailyPrices: {},
   },
 
   mutations: {
@@ -45,6 +47,9 @@ export default {
     modifyCashFlowStatement(state, payload) {
       Vue.set(state.CashFlowStatement, payload.stat, payload.amount);
     },
+    modifyHistoricalPrices(state, object) {
+      state.historicalDailyPrices = object;
+    }
   },
 
   getters: {
@@ -70,6 +75,9 @@ export default {
         "TreasuryStock": state.BalanceSheet.TreasuryStock,
         "CapitalExpenditure": state.CashFlowStatement.CapitalExpenditure,
       }
+    },
+    getHistoricalDailyPrices: state => {
+      return state.historicalDailyPrices;
     }
   },
 
@@ -93,7 +101,7 @@ export default {
     },
 
     async fetchTenYearEPS({ commit }, ticker) {
-      const json = await axios.get(`http://localhost:3000/eps?ticker=${ticker}`);
+      const json = await axios.get(`https://financial-webscraping-api.herokuapp.com/eps?ticker=${ticker}`);
       const EPSarray = json.data.eps;
       for (let i = 0; i < 10; i++) {
         commit("modifyEPS", {position: i, amount: EPSarray[i]});
@@ -101,11 +109,30 @@ export default {
     },
 
     async fetchTenYearPE({ commit }, ticker) {
-      const json = await axios.get(`http://localhost:3000/pe?ticker=${ticker}`);
+      const json = await axios.get(`https://financial-webscraping-api.herokuapp.com/pe?ticker=${ticker}`);
       const PEarray = json.data.pe;
       for (let i = 0; i < 10; i++) {
         commit("modifyPEratio", {position: i, amount: PEarray[i]})
       }
     },
+
+    async fetchHistoricPrices({ commit }, ticker) {
+      console.log("fetching");
+      var today = new Date();
+      var dateToday = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      var date1YearAgo = (today.getFullYear()-1)+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      const historicalDailyPrices = yahooFinance.historical({
+        symbol: ticker,
+        from: date1YearAgo,
+        to: dateToday,
+        period: 'd',
+      })
+      let historicalDailyPricesCleaned = {}
+      for (let dailyRecords in historicalDailyPrices) {
+        historicalDailyPricesCleaned[dailyRecords.date] = historicalDailyPrices.close
+      }
+      console.log(historicalDailyPricesCleaned);
+      commit('modifyHistoricalPrices', historicalDailyPricesCleaned);
+    }
   }
 }
