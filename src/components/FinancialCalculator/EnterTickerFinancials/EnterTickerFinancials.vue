@@ -19,6 +19,8 @@ export default {
   },
   methods: {
     fetchFinancials: function (ticker) {
+      this.$store.commit("calculations/clearAll");
+      this.$store.commit("FinancialDataAPI/clearAll");
       this.$store.dispatch("FinancialDataAPI/fetchFinancials", ticker.toUpperCase());    
     },
   },

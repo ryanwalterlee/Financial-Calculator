@@ -54,6 +54,21 @@ export default {
 
     modifyHistoricalPrices(state, object) {
       state.historicalDailyPrices = object;
+    },
+
+    clearAll(state) {
+      state.EPS = new Array(10).fill("");
+      state.PEratio = new Array(10).fill("");
+      for (let stat in state.IncomeStatement) {
+        state.IncomeStatement[stat] = "";
+      }
+      for (let stat in state.BalanceSheet) {
+        state.BalanceSheet[stat] = "";
+      }
+      for (let stat in state.CashFlowStatement) {
+        state.CashFlowStatement[stat] = "";
+      }
+      state.CurrentMarketPrice = "";
     }
   },
 

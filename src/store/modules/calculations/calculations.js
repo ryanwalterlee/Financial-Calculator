@@ -48,18 +48,18 @@ export default {
     modifyCurrentMarketPrice(state, n) { state.CurrentMarketPrice = n },
 
     clearAll(state) {
-      state.EPS = new Array(10).fill(0);
-      state.PEratio = new Array(10).fill(0);
+      state.EPS = new Array(10).fill("");
+      state.PEratio = new Array(10).fill("");
       for (let stat in state.IncomeStatement) {
-        state.IncomeStatement[stat] = 0;
+        state.IncomeStatement[stat] = "";
       }
       for (let stat in state.BalanceSheet) {
-        state.BalanceSheet[stat] = 0;
+        state.BalanceSheet[stat] = "";
       }
       for (let stat in state.CashFlowStatement) {
-        state.CashFlowStatement[stat] = 0;
+        state.CashFlowStatement[stat] = "";
       }
-      state.CurrentMarketPrice = 0;
+      state.CurrentMarketPrice = "";
     }
   },
 

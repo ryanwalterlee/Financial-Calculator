@@ -5,6 +5,9 @@
         <th colspan="2">Projections</th>
       </thead>
       <tbody>
+        <tr v-if="cannotCalculate">
+          <td class="red" colspan="2" v-if="cannotCalculate">Cannot Calculate due to negative EPS</td>
+        </tr>
         <tr v-for="projection in ProjectionMetrics" :key="projection">
           <td class="label" :class="calcProjections[projection][1]">{{ projection }}</td>
           <td :class="calcProjections[projection][1]">{{ calcProjections[projection][0] }}</td>
@@ -38,6 +41,17 @@ export default {
       "PEratio",
       "CurrentMarketPrice"
     ]),
+    cannotCalculate: function() {
+      const EPSarray = this.EPS;
+      const firstEPS = EPSarray[0];
+      const lastEPS = EPSarray[9];
+      if (firstEPS < 0 || lastEPS < 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+
     avgEPSgrowth: function() {
       const EPSarray = this.EPS;
       const firstEPS = EPSarray[0];
@@ -54,6 +68,7 @@ export default {
         const result = (((1 + this.avgEPSgrowth)**10)*firstEPS).toFixed(2);
         
         return [result, ""];
+
       } else {
         return ["",""];
       }
