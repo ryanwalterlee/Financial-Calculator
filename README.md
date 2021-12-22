@@ -34,7 +34,7 @@ Users can enter a ticker and click Submit, the app will
 ![Screenshot of website](src/assets/BasicWebsite.jpg)
 
 ### Benefits
-Previously, I had an excel sheet that looks similar to this website. However, I would need to manually visit each MacroTrends and Financial Modeling Prep and manually copy-paste data into the input fields. This task not only takes about 5 minutes per company, but is prone to human errors (such as missing out 1 digit when copying). Therefore, this website not only improves accuracy of data transfer to 100%, but **automates a 5 minute task into a mere 10 seconds**, which is a **30x improvement in speed**.
+Previously, I had an excel sheet that looks similar to this website. However, I would need to manually visit each MacroTrends and Yahoo Finance and manually copy-paste data into the input fields. This task not only takes about 5 minutes per company, but is prone to human errors (such as missing out 1 digit when copying and could cost you a fortune). Therefore, this website not only improves accuracy of data transfer to 100%, but **automates a 5 minute task into a mere 10 seconds**, which is a **30x improvement in speed**.
 
 
 ### Design Decisions
