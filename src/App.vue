@@ -45,6 +45,8 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   height: 100%; /* increase height of app */
+  width: 100%;
+  
 }
 
 .header {
@@ -54,7 +56,7 @@ export default {
 .main-page {
   display: flex;
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 
 .router-view-container {
@@ -62,6 +64,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  height: 100%;
 }
 
 </style>

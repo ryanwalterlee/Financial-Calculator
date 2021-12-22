@@ -7,7 +7,8 @@
       <tbody>
         <tr v-for="ratio in Ratios" :key="ratio">
           <td class="label" :class="calcFundamentalAnalysis[ratio][1]">{{ ratio }}</td>
-          <td :class="calcFundamentalAnalysis[ratio][1]">
+          <td class="result"
+            :class="calcFundamentalAnalysis[ratio][1]">
             {{ calcFundamentalAnalysis[ratio][0] }}
           </td>
         </tr>
@@ -213,14 +214,18 @@ th {
 }
 
 table {
-  width: 400px;
+  /* width: 400px; */
   background-color: rgb(51, 51, 51);
   color: white;
   border-radius:10px;
 }
 
-.label {
+/* .label {
   width:320px;
+} */
+
+.result {
+  min-width: 50px;
 }
 
 /* next 3 styles for styling results depending on how good results are */

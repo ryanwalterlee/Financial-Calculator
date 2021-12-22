@@ -136,6 +136,7 @@ export default {
     async fetchCashFlowStatement({commit}, ticker) {
       const json = await axios.get(`https://financialmodelingprep.com/api/v3/cash-flow-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`)
       const data = json.data[0];
+      console.log(json);
       commit("modifyCashFlowStatement", {stat: "CapitalExpenditure", amount: data.capitalExpenditure});
     },
 

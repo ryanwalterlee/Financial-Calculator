@@ -58,6 +58,12 @@ export default {
   height: 100vh; /* increase height of app */
 }
 
+@media only screen and (max-width: 1000px) {
+  #financial-calculator {
+    height: 100%;
+  }
+}
+
 .fundamentals {
   display: flex;
   flex-direction: row; /* put statistics side by side */
@@ -81,5 +87,13 @@ export default {
   justify-content: center; /* center in the webpage */
   font-family: 'Roboto Condensed', sans-serif;
 }
+
+/* mobile responsivity */
+.fundamentals, .results {
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+
 
 </style>
