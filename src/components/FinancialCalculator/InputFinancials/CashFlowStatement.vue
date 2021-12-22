@@ -32,7 +32,7 @@ export default {
         }     
   },
   computed: {
-    ...mapGetters("yahooFinance", [
+    ...mapGetters("FinancialDataAPI", [
       "getFinancials",
     ]),
   },

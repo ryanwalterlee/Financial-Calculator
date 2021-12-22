@@ -19,9 +19,7 @@ export default {
   },
   methods: {
     fetchFinancials: function (ticker) {
-      this.$store.dispatch("yahooFinance/fetchFinancials", ticker.toUpperCase());
-      this.$store.dispatch("yahooFinance/fetchTenYearEPS", ticker.toUpperCase());
-      this.$store.dispatch("yahooFinance/fetchTenYearPE", ticker.toUpperCase());
+      this.$store.dispatch("FinancialDataAPI/fetchFinancials", ticker.toUpperCase());    
     },
   },
   

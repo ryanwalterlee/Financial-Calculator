@@ -1,6 +1,5 @@
 import Vue from "vue";
 import axios from 'axios';
-var yahooFinance = require('yahoo-finance');
 
 export default {
   namespaced: true, // prevent methods going to global namespace
@@ -82,22 +81,39 @@ export default {
   },
 
   actions: {
-    async fetchFinancials({ commit }, ticker) {
-      const json = await axios.get(`https://api.polygon.io/vX/reference/financials?ticker=${ticker}&timeframe=annual&apiKey=CrqPc8_kJXGuQASIWk3n7ctrvm0EPtrl`);
-      const data = await json.data;
-      const financials = await data.results[0].financials;
-      const incomeStatement = await financials.income_statement;
-      const balanceSheet = await financials.balance_sheet;
-      // const cashFlowStatement = await financials.cash_flow_statement;
+    async fetchFinancials({dispatch}, ticker) {
+      dispatch("fetchIncomeStatement", ticker);
+      dispatch("fetchBalanceSheet", ticker);
+      dispatch("fetchCashFlowStatement", ticker);
+      dispatch("fetchTenYearEPS", ticker);
+      dispatch("fetchTenYearPE", ticker);
+    },
 
-      commit("modifyIncomeStatement", {stat: "TotalRevenue", amount: incomeStatement.revenues.value});
-      commit("modifyIncomeStatement", {stat: "GrossProfit", amount: incomeStatement.gross_profit.value});
-      commit("modifyIncomeStatement", {stat: "OperatingIncome", amount: incomeStatement.operating_income_loss.value});
-      commit("modifyIncomeStatement", {stat: "InterestExpense", amount: incomeStatement.interest_expense_operating.value});
-      commit("modifyIncomeStatement", {stat: "NetEarnings", amount: incomeStatement.net_income_loss.value});
-      commit("modifyBalanceSheet", {stat: "LongTermDebt", amount: balanceSheet.noncurrent_liabilities.value});
-      commit("modifyBalanceSheet", {stat: "TotalLiabilities", amount: balanceSheet.liabilities.value});
-      commit("modifyBalanceSheet", {stat: "ShareholderEquity", amount: balanceSheet.equity.value});     
+    async fetchIncomeStatement({ commit }, ticker) {
+      const json = await axios.get(`https://financialmodelingprep.com/api/v3/income-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
+      const data = json.data[0];
+      commit("modifyIncomeStatement", {stat: "TotalRevenue", amount: data.revenue});
+      commit("modifyIncomeStatement", {stat: "GrossProfit", amount: data.grossProfit});
+      commit("modifyIncomeStatement", {stat: "SGA", amount: data.sellingAndMarketingExpenses});
+      commit("modifyIncomeStatement", {stat: "RD", amount: data.researchAndDevelopmentExpenses});
+      commit("modifyIncomeStatement", {stat: "Depreciation", amount: data.depreciationAndAmortization});
+      commit("modifyIncomeStatement", {stat: "OperatingIncome", amount: data.operatingIncome});
+      commit("modifyIncomeStatement", {stat: "InterestExpense", amount: data.interestExpense});
+      commit("modifyIncomeStatement", {stat: "NetEarnings", amount: data.netIncome});
+    },
+
+    async fetchBalanceSheet({commit}, ticker) {
+      const json = await axios.get(`https://financialmodelingprep.com/api/v3/balance-sheet-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
+      const data = json.data[0];
+      commit("modifyBalanceSheet", {stat: "LongTermDebt", amount: data.longTermDebt});
+      commit("modifyBalanceSheet", {stat: "TotalLiabilities", amount: data.totalLiabilities});
+      commit("modifyBalanceSheet", {stat: "ShareholderEquity", amount: data.totalStockholdersEquity});
+    },
+
+    async fetchCashFlowStatement({commit}, ticker) {
+      const json = await axios.get(`https://financialmodelingprep.com/api/v3/cash-flow-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`)
+      const data = json.data[0];
+      commit("modifyCashFlowStatement", {stat: "CapitalExpenditure", amount: data.capitalExpenditure});
     },
 
     async fetchTenYearEPS({ commit }, ticker) {
@@ -115,24 +131,5 @@ export default {
         commit("modifyPEratio", {position: i, amount: PEarray[i]})
       }
     },
-
-    async fetchHistoricPrices({ commit }, ticker) {
-      console.log("fetching");
-      var today = new Date();
-      var dateToday = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      var date1YearAgo = (today.getFullYear()-1)+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      const historicalDailyPrices = yahooFinance.historical({
-        symbol: ticker,
-        from: date1YearAgo,
-        to: dateToday,
-        period: 'd',
-      })
-      let historicalDailyPricesCleaned = {}
-      for (let dailyRecords in historicalDailyPrices) {
-        historicalDailyPricesCleaned[dailyRecords.date] = historicalDailyPrices.close
-      }
-      console.log(historicalDailyPricesCleaned);
-      commit('modifyHistoricalPrices', historicalDailyPricesCleaned);
-    }
   }
 }

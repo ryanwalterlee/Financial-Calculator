@@ -28,13 +28,13 @@ Use this web application to do fundamental analysis on stocks. Enter the require
 
 Users can enter a ticker and click Submit, the app will
 
-1. Send a get request using the input ticker to Yahoo Finance API, and automatically fill in information in the input boxes
-2. Send a get request to another of my local API (MacroTrend WebScraping API) which will go to MacroTrends website and WebScrapes historic financial data and also autotomatically fills in information after retrieving it
+1. Send a get request using the input ticker to Financial Modeling Prep API, and automatically fill in information in the input boxes
+2. Send a get request to another of my API (MacroTrend WebScraping API) which will go to MacroTrends website and WebScrapes historic financial data and also autotomatically fills in information after retrieving it
 
 ![Screenshot of website](src/assets/BasicWebsite.jpg)
 
 ### Benefits
-Previously, I had an excel sheet that looks similar to this website. However, I would need to manually visit each MacroTrends and Yahoo Finance and manually copy-paste data into the input fields. This task not only takes about 5 minutes per company, but is prone to human errors (such as missing out 1 digit when copying). Therefore, this website not only improves accuracy of data transfer to 100%, but **automates a 5 minute task into a mere 10 seconds**, which is a **30x improvement in speed**.
+Previously, I had an excel sheet that looks similar to this website. However, I would need to manually visit each MacroTrends and Financial Modeling Prep and manually copy-paste data into the input fields. This task not only takes about 5 minutes per company, but is prone to human errors (such as missing out 1 digit when copying). Therefore, this website not only improves accuracy of data transfer to 100%, but **automates a 5 minute task into a mere 10 seconds**, which is a **30x improvement in speed**.
 
 
 ### Design Decisions

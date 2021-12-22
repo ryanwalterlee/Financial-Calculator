@@ -42,7 +42,7 @@ export default {
         }
         return array;
     },
-    ...mapGetters("yahooFinance", [
+    ...mapGetters("FinancialDataAPI", [
       "getHistoricData",
     ]),  
   },
@@ -50,7 +50,6 @@ export default {
     modifyEPS(position, amount) {
       this.$store.commit('calculations/modifyEPS', 
         {position:position, amount:amount});
-      console.log("store update")
     },
     modifyPEratio(position, amount) {
       this.$store.commit('calculations/modifyPEratio', 
