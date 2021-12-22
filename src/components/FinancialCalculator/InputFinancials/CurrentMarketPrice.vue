@@ -5,9 +5,10 @@
         <th colspan="2">Current Market Price</th>
       </thead>
       <tbody>
-        <tr v-for="stat in stats" :key="stat">
+        <tr v-for="stat in Object.keys(stats)" :key="stat">
           <td class="label">{{ stat }}</td>
-          <td><input type="Number" @change="modifyCurrentMarketPrice($event.target.value)"/></td>
+          <td><input type="Number" @change="modifyCurrentMarketPrice($event.target.value)"
+            :value="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>
     </table>
@@ -15,19 +16,38 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import Vue from "vue";
+
 export default {
   name: "CurrentMarketPrice",
   data: function () {
     return {
-      stats: ["Current Market Price"],
+      stats: {"Current Market Price": "CurrentMarketPrice"},
+      inputFromAPI: {"Current Market Price": ""}
     };
+  },
+  computed: {
+    ...mapGetters("FinancialDataAPI", [
+      "getFinancials",
+    ]),
   },
   methods: {
     modifyCurrentMarketPrice: function(n) {
       this.$store.commit("calculations/modifyCurrentMarketPrice", n);
     }
+  },
+  watch: {
+    getFinancials: function() {
+      for (let stat in this.inputFromAPI) {
+        Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
+
+        // required because change in v-model does not trigger @change event
+        this.modifyCurrentMarketPrice(this.inputFromAPI[stat]);
+      }
+    }
   }
-};
+}
 </script>
 
 <style scoped>

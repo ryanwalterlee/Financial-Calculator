@@ -25,6 +25,7 @@ export default {
     CashFlowStatement: {
       CapitalExpenditure: "",
     },
+    CurrentMarketPrice: "",
     historicalDailyPrices: {},
   },
 
@@ -46,6 +47,11 @@ export default {
     modifyCashFlowStatement(state, payload) {
       Vue.set(state.CashFlowStatement, payload.stat, payload.amount);
     },
+
+    modifyCurrentMarketPrice(state, price) {
+      state.CurrentMarketPrice = price;
+    },
+
     modifyHistoricalPrices(state, object) {
       state.historicalDailyPrices = object;
     }
@@ -73,6 +79,7 @@ export default {
         "ShareholderEquity": state.BalanceSheet.ShareholderEquity,
         "TreasuryStock": state.BalanceSheet.TreasuryStock,
         "CapitalExpenditure": state.CashFlowStatement.CapitalExpenditure,
+        "CurrentMarketPrice": state.CurrentMarketPrice,
       }
     },
     getHistoricalDailyPrices: state => {
@@ -87,6 +94,7 @@ export default {
       dispatch("fetchCashFlowStatement", ticker);
       dispatch("fetchTenYearEPS", ticker);
       dispatch("fetchTenYearPE", ticker);
+      dispatch("fetchCurrentMarketPrice", ticker);
     },
 
     async fetchIncomeStatement({ commit }, ticker) {
@@ -114,6 +122,12 @@ export default {
       const json = await axios.get(`https://financialmodelingprep.com/api/v3/cash-flow-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`)
       const data = json.data[0];
       commit("modifyCashFlowStatement", {stat: "CapitalExpenditure", amount: data.capitalExpenditure});
+    },
+
+    async fetchCurrentMarketPrice({commit}, ticker) {
+      const json = await axios.get(`https://financialmodelingprep.com/api/v3/quote-short/${ticker}?apikey=2c7e3314ec7ada4cb9e9a34c7795506b`)
+      const data = json.data[0];
+      commit("modifyCurrentMarketPrice", data.price);
     },
 
     async fetchTenYearEPS({ commit }, ticker) {
