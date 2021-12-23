@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     fetchHistoricPrice: function (ticker) {
-      this.$store.dispatch("yahooFinance/fetchHistoricPrices", ticker.toUpperCase());
+      this.$store.dispatch("FinancialDataAPI/fetchHistoricalDailyPrices", ticker.toUpperCase());
     },
   },
   

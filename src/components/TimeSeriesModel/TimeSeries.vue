@@ -1,31 +1,39 @@
 <template>
   <div class="div-container">
-    <enter-ticker/>
-    <p> IN PROGRESS </p>
+    <enter-ticker />
+    <chart class="chart" :chartData="getHistoricalDailyPrices"/>
   </div>
 </template>
 
 <script>
 import EnterTicker from './EnterTickerTime/EnterTickerTime.vue';
+import Chart from './Chart/Chart.vue';
+import { mapGetters } from 'vuex';
 
 export default {
   name: "TimeSeriesModel",
   components: {
     EnterTicker,
+    Chart
+  },
+  computed: {
+    ...mapGetters({
+      getHistoricalDailyPrices: 'FinancialDataAPI/getHistoricalDailyPrices'
+    })
   }
 }
 </script>
 
 <style scoped>
-p {
-  font-size: 600%;
-  color: red;
-  background-color: white;
-}
-
 .div-container {
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 100vh;
+}
+
+.chart {
+  background-color: white;
+  margin: 50px;
 }
 </style>

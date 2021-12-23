@@ -161,5 +161,23 @@ export default {
         commit("modifyPEratio", {position: i, amount: PEarray[i]})
       }
     },
+
+    async fetchHistoricalDailyPrices({ commit }, ticker) {
+      const json = await axios.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${ticker}?serietype=line&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
+      const data = json.data;
+    
+      const labels = data.historical.map(item => item.date).slice(0,253).reverse();
+      const dataset = data.historical.map(item => item.close).slice(0,253).reverse();
+    
+      const chartData = {
+        labels: labels,
+        datasets: [{
+          label: 'Closing Price',
+          data: dataset,
+        }]
+      }
+    
+      commit("modifyHistoricalPrices", chartData);
+    }
   }
 }
