@@ -67,4 +67,9 @@ export default {
   height: 100%;
 }
 
+.side-nav-bar-container {
+  position: fixed;
+  height: 100%;
+}
+
 </style>

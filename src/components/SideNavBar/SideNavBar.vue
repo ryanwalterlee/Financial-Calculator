@@ -11,7 +11,7 @@
 
     <div class="links" v-if="open">
       <router-link class="link" to="/" @click.native="clearAllState()">Home</router-link> <!-- @click does not trigger -->
-      <router-link class="link" to="/predictions">Time Series Model</router-link>
+      <router-link class="link" to="/prices" @click.native="clearAllPrice()">Stock Price Chart</router-link>
     </div>
   </div>
 </template>
@@ -38,6 +38,9 @@ export default {
     clearAllState: function() {
       this.$store.commit("calculations/clearAll");
     },
+    clearAllPrice: function() {
+      this.$store.commit("FinancialDataAPI/clearAll")
+    }
   }
 };
 </script>

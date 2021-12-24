@@ -5,7 +5,12 @@
       spellcheck="false" 
       placeholder="Enter Ticker" 
       v-model="ticker" />
-    <input class="submit" type="submit" @click="fetchHistoricPrice(ticker)" />
+    <div class="duration">
+      <input class="submit" type="submit" value="3 month" @click="fetchHistoricPrice(ticker, '3 month')" />
+      <input class="submit" type="submit" value="6 month" @click="fetchHistoricPrice(ticker, '6 month')" />
+      <input class="submit" type="submit" value="1 year" @click="fetchHistoricPrice(ticker, '1 year')" />
+      <input class="submit" type="submit" value="5 year" @click="fetchHistoricPrice(ticker, '5 year')" />
+    </div>
   </div>
 </template>
 
@@ -18,8 +23,8 @@ export default {
     };
   },
   methods: {
-    fetchHistoricPrice: function (ticker) {
-      this.$store.dispatch("FinancialDataAPI/fetchHistoricalDailyPrices", ticker.toUpperCase());
+    fetchHistoricPrice: function (ticker, time) {
+      this.$store.dispatch("FinancialDataAPI/fetchHistoricalDailyPrices", {ticker: ticker, time: time});
     },
   },
   
@@ -34,7 +39,6 @@ div {
 }
 
 input {
-  width: 250px;
   border: hidden;
   border-radius: 10px;
   height: 30px;
@@ -56,6 +60,7 @@ input:focus {
 }
 
 .submit {
+  width: 70px;
   color: black;
   background-color: rgb(0, 168, 90);
   font-family: "Roboto Condensed", sans-serif;
@@ -76,5 +81,10 @@ input:focus {
 
 .ticker::placeholder {
   font-weight: normal;
+}
+
+.duration {
+  display: flex;
+  flex-direction: row;
 }
 </style>

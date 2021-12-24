@@ -1,7 +1,8 @@
 <template>
   <div class="div-container">
     <enter-ticker />
-    <chart class="chart" :chartData="getHistoricalDailyPrices"/>
+    <chart class="chart" 
+      :chartData="getHistoricalDailyPrices"/>
   </div>
 </template>
 
@@ -30,10 +31,19 @@ export default {
   flex-direction: column;
   align-items: center;
   height: 100vh;
+  width: 100%;
 }
+
+/* @media only screen and (max-width: 1000px) {
+  .div-container {
+    height: 100%;
+  }
+} */
 
 .chart {
   background-color: white;
   margin: 50px;
+  border-radius: 20px;
+  padding: 30px
 }
 </style>

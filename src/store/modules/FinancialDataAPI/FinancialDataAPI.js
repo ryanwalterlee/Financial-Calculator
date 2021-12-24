@@ -26,7 +26,9 @@ export default {
       CapitalExpenditure: "",
     },
     CurrentMarketPrice: "",
-    historicalDailyPrices: {},
+    CurrentTicker: "",
+    HistoricalDailyPrices: {},
+    FullHistoricalDailyPrices: {},
   },
 
   mutations: {
@@ -53,7 +55,15 @@ export default {
     },
 
     modifyHistoricalPrices(state, object) {
-      state.historicalDailyPrices = object;
+      state.HistoricalDailyPrices = object;
+    },
+
+    modifyCurrentTicker(state, ticker) {
+      state.CurrentTicker = ticker;
+    },
+
+    modifyFullHistoricalPrices(state, object) {
+      state.FullHistoricalDailyPrices = object;
     },
 
     clearAll(state) {
@@ -69,6 +79,9 @@ export default {
         state.CashFlowStatement[stat] = "";
       }
       state.CurrentMarketPrice = "";
+      state.HistoricalDailyPrices = {};
+      state.FullHistoricalDailyPrices = {};
+      state.CurrentTicker = "";
     }
   },
 
@@ -98,7 +111,7 @@ export default {
       }
     },
     getHistoricalDailyPrices: state => {
-      return state.historicalDailyPrices;
+      return state.HistoricalDailyPrices;
     }
   },
 
@@ -136,7 +149,6 @@ export default {
     async fetchCashFlowStatement({commit}, ticker) {
       const json = await axios.get(`https://financialmodelingprep.com/api/v3/cash-flow-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`)
       const data = json.data[0];
-      console.log(json);
       commit("modifyCashFlowStatement", {stat: "CapitalExpenditure", amount: data.capitalExpenditure});
     },
 
@@ -162,22 +174,86 @@ export default {
       }
     },
 
-    async fetchHistoricalDailyPrices({ commit }, ticker) {
-      const json = await axios.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${ticker}?serietype=line&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
-      const data = json.data;
-    
-      const labels = data.historical.map(item => item.date).slice(0,253).reverse();
-      const dataset = data.historical.map(item => item.close).slice(0,253).reverse();
-    
-      const chartData = {
-        labels: labels,
-        datasets: [{
-          label: 'Closing Price',
-          data: dataset,
-        }]
+    async fetchHistoricalDailyPrices({commit, state}, object) {
+
+      if (state.CurrentTicker !== object.ticker) {
+        const json = await axios.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${object.ticker}?serietype=line&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
+        const data = json.data;
+      
+        let labels = data.historical.map(item => item.date).slice(0,253*5);
+        let dataset = data.historical.map(item => item.close).slice(0,253*5);
+      
+        const chartdata = {
+          labels: labels,
+          datasets: [{
+            label: 'Closing Price',
+            borderColor: '#ff0000',
+            borderWidth: 1,
+            pointRadius: 0,
+            data: dataset,
+          }]
+        }
+
+        commit("modifyCurrentTicker", object.ticker);
+        commit("modifyFullHistoricalPrices", chartdata);
+
+        if (object.time === "3 month") {
+          labels = labels.slice(0, 63);
+          dataset = dataset.slice(0, 63);
+        } else if (object.time === "6 month") {
+          labels = labels.slice(0, 126);
+          dataset = dataset.slice(0, 126);
+        } else if (object.time === "1 year") {
+          labels = labels.slice(0, 253);
+          dataset = dataset.slice(0, 253);
+        } else {
+          labels = labels.slice();
+          dataset = dataset.slice();
+        }
+
+        const slicedChartdata = {
+          labels: labels.reverse(),
+          datasets: [{
+            label: 'Closing Price',
+            borderColor: '#ff0000',
+            borderWidth: 1,
+            pointRadius: 0,
+            data: dataset.reverse(),
+          }]
+        }
+
+        commit("modifyHistoricalPrices", slicedChartdata);
+      } else {
+        let labels = state.FullHistoricalDailyPrices.labels.slice();
+        let dataset = state.FullHistoricalDailyPrices.datasets[0].data.slice();
+
+        if (object.time === "3 month") {
+          labels = labels.slice(0, 63);
+          dataset = dataset.slice(0, 63);
+        } else if (object.time === "6 month") {
+          labels = labels.slice(0, 126);
+          dataset = dataset.slice(0, 126);
+        } else if (object.time === "1 year") {
+          labels = labels.slice(0, 253);
+          dataset = dataset.slice(0, 253);
+        }
+        labels = labels.reverse();
+        dataset = dataset.reverse();
+
+        const chartdata = {
+          labels: labels,
+          datasets: [{
+            label: 'Closing Price',
+            borderColor: '#ff0000',
+            borderWidth: 1,
+            pointRadius: 0,
+            data: dataset,
+          }]
+        }
+
+        commit("modifyHistoricalPrices", chartdata);
       }
-    
-      commit("modifyHistoricalPrices", chartData);
     }
+
   }
 }

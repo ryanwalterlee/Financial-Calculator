@@ -5,8 +5,8 @@ export default [
     component: () => import("../components/FinancialCalculator/FinancialCalculator.vue"),
   },
   {
-    path: "/predictions",
-    name: "predictions",
-    component: () => import("../components/TimeSeriesModel/TimeSeries.vue")
+    path: "/prices",
+    name: "prices",
+    component: () => import("../components/StockPriceChart/StockPriceChart.vue")
   }
 ]
