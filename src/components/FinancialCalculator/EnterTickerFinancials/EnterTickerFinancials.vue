@@ -5,7 +5,10 @@
       spellcheck="false" 
       placeholder="Enter Ticker" 
       v-model="ticker" />
-    <input class="submit" type="submit" @click="fetchFinancials(ticker)" />
+    <input class="submit" 
+      type="submit" 
+      :disabled="isDisabled"
+      @click="fetchFinancials(ticker)" />
   </div>
 </template>
 
@@ -15,13 +18,20 @@ export default {
   data: function () {
     return {
       ticker: "",
+      isDisabled: false,
     };
   },
+  
   methods: {
-    fetchFinancials: function (ticker) {
+    fetchFinancials: async function (ticker) {
+      this.isDisabled = true;
+
       this.$store.commit("calculations/clearAll");
       this.$store.commit("FinancialDataAPI/clearAll");
-      this.$store.dispatch("FinancialDataAPI/fetchFinancials", ticker.toUpperCase());    
+      await this.$store.dispatch("FinancialDataAPI/fetchFinancials", ticker.toUpperCase());
+
+      // only disables button again when the webscrapping is complete
+      this.isDisabled = false;     
     },
   },
   
@@ -68,6 +78,11 @@ input:focus {
   box-shadow: 5px5px5px#eee;
   text-shadow: none;
   transition: 0.5s ease-out;
+}
+
+.submit:disabled {
+  background: rgb(0, 131, 70);
+  animation: spin 2s linear infinite;
 }
 
 .ticker {

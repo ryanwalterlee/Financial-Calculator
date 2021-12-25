@@ -116,73 +116,88 @@ export default {
   },
 
   actions: {
-    async fetchFinancials({dispatch}, ticker) {
-      dispatch("fetchIncomeStatement", ticker);
-      dispatch("fetchBalanceSheet", ticker);
-      dispatch("fetchCashFlowStatement", ticker);
-      dispatch("fetchTenYearEPS", ticker);
-      dispatch("fetchTenYearPE", ticker);
-      dispatch("fetchCurrentMarketPrice", ticker);
+    async fetchFinancials({ dispatch }, ticker) {
+      
+      // await this promise to wait for all promises inside to resolve
+      await Promise.allSettled([ 
+        dispatch("fetchIncomeStatement", ticker),
+        dispatch("fetchBalanceSheet", ticker),
+        dispatch("fetchCashFlowStatement", ticker),
+        dispatch("fetchCurrentMarketPrice", ticker),
+        dispatch("fetchTenYearEPS", ticker),
+        dispatch("fetchTenYearPE", ticker)
+      ])
     },
 
     async fetchIncomeStatement({ commit }, ticker) {
+
       const json = await axios.get(`https://financialmodelingprep.com/api/v3/income-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
       const data = json.data[0];
-      commit("modifyIncomeStatement", {stat: "TotalRevenue", amount: data.revenue});
-      commit("modifyIncomeStatement", {stat: "GrossProfit", amount: data.grossProfit});
-      commit("modifyIncomeStatement", {stat: "SGA", amount: data.sellingAndMarketingExpenses});
-      commit("modifyIncomeStatement", {stat: "RD", amount: data.researchAndDevelopmentExpenses});
-      commit("modifyIncomeStatement", {stat: "Depreciation", amount: data.depreciationAndAmortization});
-      commit("modifyIncomeStatement", {stat: "OperatingIncome", amount: data.operatingIncome});
-      commit("modifyIncomeStatement", {stat: "InterestExpense", amount: data.interestExpense});
-      commit("modifyIncomeStatement", {stat: "NetEarnings", amount: data.netIncome});
+      commit("modifyIncomeStatement", { stat: "TotalRevenue", amount: data.revenue });
+      commit("modifyIncomeStatement", { stat: "GrossProfit", amount: data.grossProfit });
+      commit("modifyIncomeStatement", { stat: "SGA", amount: data.sellingAndMarketingExpenses });
+      commit("modifyIncomeStatement", { stat: "RD", amount: data.researchAndDevelopmentExpenses });
+      commit("modifyIncomeStatement", { stat: "Depreciation", amount: data.depreciationAndAmortization });
+      commit("modifyIncomeStatement", { stat: "OperatingIncome", amount: data.operatingIncome });
+      commit("modifyIncomeStatement", { stat: "InterestExpense", amount: data.interestExpense });
+      commit("modifyIncomeStatement", { stat: "NetEarnings", amount: data.netIncome });
+
     },
 
-    async fetchBalanceSheet({commit}, ticker) {
+    async fetchBalanceSheet({ commit }, ticker) {
+
       const json = await axios.get(`https://financialmodelingprep.com/api/v3/balance-sheet-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
       const data = json.data[0];
-      commit("modifyBalanceSheet", {stat: "LongTermDebt", amount: data.longTermDebt});
-      commit("modifyBalanceSheet", {stat: "TotalLiabilities", amount: data.totalLiabilities});
-      commit("modifyBalanceSheet", {stat: "ShareholderEquity", amount: data.totalStockholdersEquity});
+      commit("modifyBalanceSheet", { stat: "LongTermDebt", amount: data.longTermDebt });
+      commit("modifyBalanceSheet", { stat: "TotalLiabilities", amount: data.totalLiabilities });
+      commit("modifyBalanceSheet", { stat: "ShareholderEquity", amount: data.totalStockholdersEquity });
+
     },
 
-    async fetchCashFlowStatement({commit}, ticker) {
+    async fetchCashFlowStatement({ commit }, ticker) {
+
       const json = await axios.get(`https://financialmodelingprep.com/api/v3/cash-flow-statement/${ticker}?limit=120&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`)
       const data = json.data[0];
-      commit("modifyCashFlowStatement", {stat: "CapitalExpenditure", amount: data.capitalExpenditure});
+      commit("modifyCashFlowStatement", { stat: "CapitalExpenditure", amount: data.capitalExpenditure });
+
     },
 
-    async fetchCurrentMarketPrice({commit}, ticker) {
+    async fetchCurrentMarketPrice({ commit }, ticker) {
+
       const json = await axios.get(`https://financialmodelingprep.com/api/v3/quote-short/${ticker}?apikey=2c7e3314ec7ada4cb9e9a34c7795506b`)
       const data = json.data[0];
       commit("modifyCurrentMarketPrice", data.price);
+
     },
 
     async fetchTenYearEPS({ commit }, ticker) {
+
       const json = await axios.get(`https://financial-webscraping-api.herokuapp.com/eps?ticker=${ticker}`);
-      const EPSarray = json.data.eps;
+      const EPSarray = await json.data.eps;
       for (let i = 0; i < 10; i++) {
-        commit("modifyEPS", {position: i, amount: EPSarray[i]});
+        commit("modifyEPS", { position: i, amount: EPSarray[i] });
       }
+
     },
 
     async fetchTenYearPE({ commit }, ticker) {
+
       const json = await axios.get(`https://financial-webscraping-api.herokuapp.com/pe?ticker=${ticker}`);
-      const PEarray = json.data.pe;
+      const PEarray = await json.data.pe;
       for (let i = 0; i < 10; i++) {
-        commit("modifyPEratio", {position: i, amount: PEarray[i]})
+        commit("modifyPEratio", { position: i, amount: PEarray[i] })
       }
     },
 
-    async fetchHistoricalDailyPrices({commit, state}, object) {
+    async fetchHistoricalDailyPrices({ commit, state }, object) {
 
       if (state.CurrentTicker !== object.ticker) {
         const json = await axios.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${object.ticker}?serietype=line&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
         const data = json.data;
-      
-        let labels = data.historical.map(item => item.date).slice(0,253*5);
-        let dataset = data.historical.map(item => item.close).slice(0,253*5);
-      
+
+        let labels = data.historical.map(item => item.date).slice(0, 253 * 5);
+        let dataset = data.historical.map(item => item.close).slice(0, 253 * 5);
+
         const chartdata = {
           labels: labels,
           datasets: [{
