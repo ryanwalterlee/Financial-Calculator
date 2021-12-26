@@ -1,14 +1,21 @@
 <template>
   <div>
-    <input class="ticker" 
-      type="text" 
-      spellcheck="false" 
-      placeholder="Enter Ticker" 
-      v-model="ticker" />
-    <input class="submit" 
-      type="submit" 
+    <input
+      class="ticker"
+      type="text"
+      spellcheck="false"
+      placeholder="Enter Ticker"
+      v-model="ticker"
+    />
+    <button
+      class="submit"
+      type="submit"
       :disabled="isDisabled"
-      @click="fetchFinancials(ticker)" />
+      @click="fetchFinancials(ticker)"
+    >
+      <div v-if="!isDisabled">Search</div>
+      <span v-if="isDisabled" class="loader"></span>
+    </button>
   </div>
 </template>
 
@@ -21,20 +28,22 @@ export default {
       isDisabled: false,
     };
   },
-  
+
   methods: {
     fetchFinancials: async function (ticker) {
       this.isDisabled = true;
 
       this.$store.commit("calculations/clearAll");
       this.$store.commit("FinancialDataAPI/clearAll");
-      await this.$store.dispatch("FinancialDataAPI/fetchFinancials", ticker.toUpperCase());
+      await this.$store.dispatch(
+        "FinancialDataAPI/fetchFinancials",
+        ticker.toUpperCase()
+      );
 
       // only disables button again when the webscrapping is complete
-      this.isDisabled = false;     
+      this.isDisabled = false;
     },
   },
-  
 };
 </script>
 
@@ -45,7 +54,8 @@ div {
   flex-direction: column;
 }
 
-input {
+input,
+button {
   width: 250px;
   border: hidden;
   border-radius: 10px;
@@ -71,18 +81,21 @@ input:focus {
   color: black;
   background-color: rgb(0, 168, 90);
   font-family: "Roboto Condensed", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.submit:hover { /* submit button when hover */
+.submit:hover {
+  /* submit button when hover */
   background: rgb(0, 131, 70);
   box-shadow: 5px5px5px#eee;
   text-shadow: none;
-  transition: 0.5s ease-out;
+  transition: 0.1s ease-in;
 }
 
 .submit:disabled {
   background: rgb(0, 131, 70);
-  animation: spin 2s linear infinite;
 }
 
 .ticker {
@@ -92,6 +105,27 @@ input:focus {
 }
 
 .ticker::placeholder {
-  font-weight: normal;
+  font-weight: normal; /* unbold placeholder */
+}
+
+/* from internet (for loader) */
+.loader {
+  width: 20px;
+  height: 20px;
+  border: 5px solid #fff;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
