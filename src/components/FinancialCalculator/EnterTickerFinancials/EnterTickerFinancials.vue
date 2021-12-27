@@ -1,24 +1,26 @@
 <template>
   <div>
-    <input
-      class="ticker"
-      type="text"
-      spellcheck="false"
-      placeholder="Enter Ticker"
-      v-model="ticker"
-    />
-    <button
-      class="submit"
-      type="submit"
-      :disabled="isDisabled"
-      @click="fetchFinancials(ticker)"
-    >
-      <!-- show this when idle -->
-      <div v-if="!isDisabled">Search</div>
+    <form>
+      <input
+        class="ticker"
+        type="text"
+        spellcheck="false"
+        placeholder="Enter Ticker"
+        v-model="ticker"
+      />
+      <button
+        class="submit"
+        type="submit"
+        :disabled="isDisabled"
+        @click="fetchFinancials(ticker)"
+      >
+        <!-- show this when idle -->
+        <div v-if="!isDisabled">Search</div>
 
-      <!-- show this when loading -->
-      <span v-if="isDisabled" class="loader"></span> 
-    </button>
+        <!-- show this when loading -->
+        <span v-if="isDisabled" class="loader"></span> 
+      </button>
+    </form>
   </div>
 </template>
 
