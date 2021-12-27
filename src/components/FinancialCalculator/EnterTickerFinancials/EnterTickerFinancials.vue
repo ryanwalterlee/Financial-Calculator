@@ -13,8 +13,11 @@
       :disabled="isDisabled"
       @click="fetchFinancials(ticker)"
     >
+      <!-- show this when idle -->
       <div v-if="!isDisabled">Search</div>
-      <span v-if="isDisabled" class="loader"></span>
+
+      <!-- show this when loading -->
+      <span v-if="isDisabled" class="loader"></span> 
     </button>
   </div>
 </template>
@@ -92,6 +95,7 @@ input:focus {
   box-shadow: 5px5px5px#eee;
   text-shadow: none;
   transition: 0.1s ease-in;
+  cursor: pointer;
 }
 
 .submit:disabled {

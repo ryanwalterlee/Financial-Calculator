@@ -6,10 +6,12 @@
       placeholder="Enter Ticker" 
       v-model="ticker" />
     <div class="duration">
+      <input class="submit" type="submit" value="1 month" @click="fetchHistoricPrice(ticker, '1 month')" />
       <input class="submit" type="submit" value="3 month" @click="fetchHistoricPrice(ticker, '3 month')" />
       <input class="submit" type="submit" value="6 month" @click="fetchHistoricPrice(ticker, '6 month')" />
       <input class="submit" type="submit" value="1 year" @click="fetchHistoricPrice(ticker, '1 year')" />
       <input class="submit" type="submit" value="5 year" @click="fetchHistoricPrice(ticker, '5 year')" />
+      <input class="submit" type="submit" value="All Time" @click="fetchHistoricPrice(ticker, 'all time')" />
     </div>
   </div>
 </template>
@@ -71,6 +73,8 @@ input:focus {
   box-shadow: 5px5px5px#eee;
   text-shadow: none;
   transition: 0.5s ease-out;
+  transition: 0.1s ease-in;
+  cursor: pointer;
 }
 
 .ticker {

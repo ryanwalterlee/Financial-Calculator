@@ -195,8 +195,8 @@ export default {
         const json = await axios.get(`https://financialmodelingprep.com/api/v3/historical-price-full/${object.ticker}?serietype=line&apikey=2c7e3314ec7ada4cb9e9a34c7795506b`);
         const data = json.data;
 
-        let labels = data.historical.map(item => item.date).slice(0, 253 * 5);
-        let dataset = data.historical.map(item => item.close).slice(0, 253 * 5);
+        let labels = data.historical.map(item => item.date).slice()
+        let dataset = data.historical.map(item => item.close).slice()
 
         const chartdata = {
           labels: labels,
@@ -212,7 +212,10 @@ export default {
         commit("modifyCurrentTicker", object.ticker);
         commit("modifyFullHistoricalPrices", chartdata);
 
-        if (object.time === "3 month") {
+        if (object.time === "1 month") {
+          labels = labels.slice(0, 21);
+          dataset = dataset.slice(0, 21);
+        } else if (object.time === "3 month") {
           labels = labels.slice(0, 63);
           dataset = dataset.slice(0, 63);
         } else if (object.time === "6 month") {
@@ -221,7 +224,10 @@ export default {
         } else if (object.time === "1 year") {
           labels = labels.slice(0, 253);
           dataset = dataset.slice(0, 253);
-        } else {
+        } else if (object.time === "5 year") {
+          labels = labels.slice(0, 253 * 5);
+          dataset = dataset.slice(0, 253 * 5);
+        } else if (object.time === " all time") {
           labels = labels.slice();
           dataset = dataset.slice();
         }
@@ -242,7 +248,10 @@ export default {
         let labels = state.FullHistoricalDailyPrices.labels.slice();
         let dataset = state.FullHistoricalDailyPrices.datasets[0].data.slice();
 
-        if (object.time === "3 month") {
+        if (object.time === "1 month") {
+          labels = labels.slice(0, 21);
+          dataset = dataset.slice(0, 21);
+        } else if (object.time === "3 month") {
           labels = labels.slice(0, 63);
           dataset = dataset.slice(0, 63);
         } else if (object.time === "6 month") {
@@ -251,6 +260,9 @@ export default {
         } else if (object.time === "1 year") {
           labels = labels.slice(0, 253);
           dataset = dataset.slice(0, 253);
+        } else if (object.time === "5 year") {
+          labels = labels.slice(0, 253 * 5);
+          dataset = dataset.slice(0, 253 * 5);
         }
         labels = labels.reverse();
         dataset = dataset.reverse();
