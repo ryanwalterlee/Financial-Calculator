@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <input class="ticker" 
       type="text" 
       spellcheck="false" 
@@ -90,5 +90,15 @@ input:focus {
 .duration {
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+
+
+@media only screen and (max-width: 450px) {
+  .container {
+    width: 100%;
+  }
 }
 </style>

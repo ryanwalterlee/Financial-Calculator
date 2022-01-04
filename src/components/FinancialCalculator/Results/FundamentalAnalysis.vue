@@ -202,6 +202,7 @@ export default {
 .fundamentalAnalysis {
   margin-left: 10px;
   margin-right:10px;
+  margin-bottom: 30px;
 }
 
 table, th, td {

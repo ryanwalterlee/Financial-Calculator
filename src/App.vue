@@ -44,9 +44,8 @@ export default {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100%; /* increase height of app */
+  height: 100%;
   width: 100%;
-  
 }
 
 .header {
@@ -54,7 +53,6 @@ export default {
 }
 
 .main-page {
-  display: flex;
   width: 100%;
   height: 100%;
 }
@@ -68,8 +66,10 @@ export default {
 }
 
 .side-nav-bar-container {
-  position: fixed;
+  position: absolute;
+  top: 60px;
+  left: 0;
   height: 100%;
+  z-index: 1;
 }
-
 </style>

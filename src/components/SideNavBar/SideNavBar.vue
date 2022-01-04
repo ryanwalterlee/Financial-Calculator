@@ -53,6 +53,8 @@ export default {
 /* let nav bar height be full when nav bar is open, else not full height */
 .open {
   height: 100%;
+  position: fixed;
+  top: 0;
 }
 
 /* styling the arrow button */
@@ -65,6 +67,7 @@ export default {
 .button-container {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 30px;
 }
 
 .links {

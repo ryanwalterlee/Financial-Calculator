@@ -1,8 +1,11 @@
 <template>
   <div class="div-container">
     <enter-ticker />
-    <chart class="chart" 
-      :chartData="getHistoricalDailyPrices"/>
+    <div class="chart-container">
+      <chart class="chart" 
+        :chartData="getHistoricalDailyPrices"
+        :options="{responsive: true, maintainAspectRatio: false}"/>
+    </div>
   </div>
 </template>
 
@@ -12,15 +15,16 @@ import Chart from './Chart/Chart.vue';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: "TimeSeriesModel",
+  name: "StockPriceChart",
   components: {
     EnterTicker,
     Chart
   },
+
   computed: {
     ...mapGetters({
       getHistoricalDailyPrices: 'FinancialDataAPI/getHistoricalDailyPrices'
-    })
+    }),
   }
 }
 </script>
@@ -31,19 +35,36 @@ export default {
   flex-direction: column;
   align-items: center;
   height: 100vh;
-  width: 100%;
+  width: 80%;
+
 }
 
-/* @media only screen and (max-width: 1000px) {
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-top: 30px;
+  margin-bottom: 50px;
+
+}
+
+@media only screen and (max-width: 450px) {
+  .chart-container {
+    width: 90vw;
+  }
+}
+
+@media only screen and (max-height: 665px) {
   .div-container {
     height: 100%;
   }
-} */
+}
 
 .chart {
   background-color: white;
-  margin: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   border-radius: 20px;
-  padding: 30px
+  padding: 10px
 }
 </style>
