@@ -58,7 +58,13 @@ export default {
   height: 100vh; /* increase height of app */
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1100px) {
+  #financial-calculator {
+    height: 100%;
+  }
+}
+
+@media only screen and (max-height: 734px) {
   #financial-calculator {
     height: 100%;
   }
