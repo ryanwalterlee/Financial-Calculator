@@ -227,7 +227,7 @@ export default {
         } else if (object.time === "5 year") {
           labels = labels.slice(0, 253 * 5);
           dataset = dataset.slice(0, 253 * 5);
-        } else if (object.time === " all time") {
+        } else if (object.time === "all time") {
           labels = labels.slice();
           dataset = dataset.slice();
         }
@@ -263,6 +263,9 @@ export default {
         } else if (object.time === "5 year") {
           labels = labels.slice(0, 253 * 5);
           dataset = dataset.slice(0, 253 * 5);
+        } else {
+          labels = labels.slice();
+          dataset = dataset.slice();
         }
         labels = labels.reverse();
         dataset = dataset.reverse();
