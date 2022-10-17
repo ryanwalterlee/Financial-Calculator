@@ -10,7 +10,6 @@
           <td>
             <input 
               type="Number"
-              @change="modifyBalanceSheet(stat, $event.target.value)"
               :value="inputFromAPI[stat]"/>
           </td>
         </tr>
@@ -43,16 +42,10 @@ export default {
       "getFinancials",
     ]),
   },
-  methods: {
-    modifyBalanceSheet: function(stat, n) {
-      this.$store.commit("calculations/modifyBalanceSheet", {stat:stat, amount:n});
-    }
-  },
   watch: {
     getFinancials: function() {      
       for (let stat in this.inputFromAPI) {
         Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
-        this.modifyBalanceSheet(this.stats[stat], this.inputFromAPI[stat]);
       }
     }
   }

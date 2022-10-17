@@ -39,7 +39,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("calculations", [
+    ...mapGetters("FinancialDataAPI", [
       "TotalRevenue",
       "GrossProfit",
       "SGA",

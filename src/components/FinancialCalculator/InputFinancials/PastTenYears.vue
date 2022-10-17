@@ -48,11 +48,11 @@ export default {
   },
   methods: {
     modifyEPS(position, amount) {
-      this.$store.commit('calculations/modifyEPS', 
+      this.$store.commit('FinancialDataAPI/modifyEPS', 
         {position:position, amount:amount});
     },
     modifyPEratio(position, amount) {
-      this.$store.commit('calculations/modifyPEratio', 
+      this.$store.commit('FinancialDataAPI/modifyPEratio', 
         {position:position, amount:amount});
     },
   },
@@ -60,16 +60,10 @@ export default {
 
     // watch for changes when API searches for ticker and updates store
     // afterwhich, proceed to update :value of inputs
-    // directly modifies calculations store as @change is not triggered
     getHistoricData: function() {
       for (let year = 0; year < 10; year++) {
         this.EPS.splice(year, 1, this.getHistoricData.EPS[year]);
         this.PEratio.splice(year, 1, this.getHistoricData.PEratio[year]);
-
-        this.$store.commit('calculations/modifyEPS', 
-          {position:year, amount:this.getHistoricData.EPS[year]});
-        this.$store.commit('calculations/modifyPEratio', 
-          {position:year, amount:this.getHistoricData.PEratio[year]});
       }
     }
   }

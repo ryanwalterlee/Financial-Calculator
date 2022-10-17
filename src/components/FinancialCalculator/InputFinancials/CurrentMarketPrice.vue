@@ -7,7 +7,7 @@
       <tbody>
         <tr v-for="stat in Object.keys(stats)" :key="stat">
           <td class="label">{{ stat }}</td>
-          <td><input type="Number" @change="modifyCurrentMarketPrice($event.target.value)"
+          <td><input type="Number"
             :value="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>
@@ -32,18 +32,10 @@ export default {
       "getFinancials",
     ]),
   },
-  methods: {
-    modifyCurrentMarketPrice: function(n) {
-      this.$store.commit("calculations/modifyCurrentMarketPrice", n);
-    }
-  },
   watch: {
     getFinancials: function() {
       for (let stat in this.inputFromAPI) {
         Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
-
-        // required because change in v-model does not trigger @change event
-        this.modifyCurrentMarketPrice(this.inputFromAPI[stat]);
       }
     }
   }

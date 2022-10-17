@@ -36,7 +36,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("calculations", [
+    ...mapGetters("FinancialDataAPI", [
       "EPS",
       "PEratio",
       "CurrentMarketPrice"

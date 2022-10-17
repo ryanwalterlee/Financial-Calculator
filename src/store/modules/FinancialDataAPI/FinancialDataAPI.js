@@ -86,6 +86,24 @@ export default {
   },
 
   getters: {
+    
+    EPS: state => state.EPS,
+    PEratio: state => state.PEratio,
+    TotalRevenue: state => state.IncomeStatement.TotalRevenue,
+    GrossProfit: state => state.IncomeStatement.GrossProfit,
+    SGA: state => state.IncomeStatement.SGA,
+    RD: state => state.IncomeStatement.RD,
+    Depreciation: state => state.IncomeStatement.Depreciation,
+    OperatingIncome: state => state.IncomeStatement.OperatingIncome,
+    InterestExpense: state => state.IncomeStatement.InterestExpense,
+    NetEarnings: state => state.IncomeStatement.NetEarnings,
+    LongTermDebt: state => state.BalanceSheet.LongTermDebt,
+    TotalLiabilities: state => state.BalanceSheet.TotalLiabilities,
+    ShareholderEquity: state => state.BalanceSheet.ShareholderEquity,
+    TreasuryStock: state => state.BalanceSheet.TreasuryStock,
+    CapitalExpenditure: state => state.CashFlowStatement.CapitalExpenditure,
+    CurrentMarketPrice: state => state.CurrentMarketPrice,
+
     getHistoricData: state => {
       return {
         "EPS": state.EPS,

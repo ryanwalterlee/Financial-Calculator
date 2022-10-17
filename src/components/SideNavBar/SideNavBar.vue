@@ -35,9 +35,6 @@ export default {
     }
   },
   methods: {
-    clearAllState: function() {
-      this.$store.commit("calculations/clearAll");
-    },
     clearAllPrice: function() {
       this.$store.commit("FinancialDataAPI/clearAll")
     }

@@ -18,7 +18,7 @@
         <div v-if="!isDisabled">Search</div>
 
         <!-- show this when loading -->
-        <span v-if="isDisabled" class="loader"></span> 
+        <span v-if="isDisabled" class="loader"></span>
       </button>
     </form>
   </div>
@@ -37,8 +37,6 @@ export default {
   methods: {
     fetchFinancials: async function (ticker) {
       this.isDisabled = true;
-
-      this.$store.commit("calculations/clearAll");
       this.$store.commit("FinancialDataAPI/clearAll");
       await this.$store.dispatch(
         "FinancialDataAPI/fetchFinancials",

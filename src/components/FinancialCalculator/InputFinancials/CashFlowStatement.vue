@@ -9,7 +9,6 @@
           <td class="label">{{ stat }}</td>
           <td><input 
             type="Number" 
-            @change="modifyCashFlowStatement(stat, $event.target.value)"
             :value="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>
@@ -36,16 +35,10 @@ export default {
       "getFinancials",
     ]),
   },
-  methods: {
-    modifyCashFlowStatement(stat, n) {
-      this.$store.commit("calculations/modifyCashFlowStatement", {stat:stat, amount:n});
-    }
-  },
   watch: {
     getFinancials: function() {      
       for (let stat in this.inputFromAPI) {
         Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
-        this.modifyCashFlowStatement(this.stats[stat], this.inputFromAPI[stat]);
       }
     }
   }

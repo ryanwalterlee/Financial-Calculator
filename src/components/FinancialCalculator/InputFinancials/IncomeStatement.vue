@@ -9,7 +9,6 @@
           <td class="label">{{ stat }}</td>
           <td><input
             type="Number"
-            @change="modifyIncomeStatement(stat, $event.target.value)"
             :value="inputFromAPI[stat]"/></td>
         </tr>
       </tbody>
@@ -49,21 +48,12 @@ export default {
       "getFinancials",
     ]),
   },
-  methods: {
-    modifyIncomeStatement: function (stat, n) {
-      this.$store.commit("calculations/modifyIncomeStatement", {stat: stat, amount: n});
-    },
-  },
   watch: {
-
     // watch for changes in computed property 
     // updates data object accordingly
     getFinancials: function() {      
       for (let stat in this.inputFromAPI) {
         Vue.set(this.inputFromAPI, stat, this.getFinancials[this.stats[stat]]);
-
-        // required because change in v-model does not trigger @change event
-        this.modifyIncomeStatement(this.stats[stat], this.inputFromAPI[stat]);
       }
     },
   }
